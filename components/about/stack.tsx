@@ -5,29 +5,120 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type Chip = {
   label: string;
-  slug: string;
+  slug?: string;
   bg: string;
   fg: string;
   iconUrl?: string;
 };
 
-const CHIPS: Chip[] = [
+type Category = {
+  key: string;
+  label: string;
+  chips: Chip[];
+};
+
+const CATEGORIES: Category[] = [
   {
-    label: "Figma",
-    slug: "figma",
-    bg: "#1f1f1f",
-    fg: "#ffffff",
-    iconUrl: "https://svgl.app/library/figma.svg",
+    key: "all",
+    label: "All",
+    chips: [
+      { label: "Figma", slug: "figma", bg: "#1f1f1f", fg: "#ffffff", iconUrl: "https://svgl.app/library/figma.svg" },
+      { label: "React", slug: "react", bg: "#1FB6CB", fg: "#ffffff" },
+      { label: "Next.js", slug: "nextdotjs", bg: "#1f1f1f", fg: "#ffffff" },
+      { label: "TypeScript", slug: "typescript", bg: "#2F74C0", fg: "#ffffff" },
+      { label: "Tailwind CSS", slug: "tailwindcss", bg: "#2BBCF5", fg: "#ffffff" },
+      { label: "shadcn/ui", slug: "shadcnui", bg: "#5b54ff", fg: "#ffffff" },
+      { label: "Framer Motion", slug: "framermotion", bg: "#0a84ff", fg: "#ffffff" },
+      { label: "GSAP", slug: "gsap", bg: "#0AE448", fg: "#0a0a0a" },
+      { label: "Java", slug: "java", bg: "#007396", fg: "#ffffff" },
+      { label: "Spring Boot", slug: "springboot", bg: "#6DB33F", fg: "#ffffff" },
+      { label: "Node.js", slug: "nodedotjs", bg: "#3C873A", fg: "#ffffff" },
+      { label: "Express", slug: "express", bg: "#000000", fg: "#ffffff" },
+      { label: "NestJS", slug: "nestjs", bg: "#E0234E", fg: "#ffffff" },
+      { label: "MongoDB", slug: "mongodb", bg: "#47A248", fg: "#ffffff" },
+      { label: "PostgreSQL", slug: "postgresql", bg: "#336791", fg: "#ffffff" },
+      { label: "Kafka", slug: "apachekafka", bg: "#231f20", fg: "#ffffff" },
+      { label: "Redis", slug: "redis", bg: "#D82C20", fg: "#ffffff" },
+      { label: "Docker", slug: "docker", bg: "#2496ED", fg: "#ffffff" },
+      { label: "Kubernetes", slug: "kubernetes", bg: "#326CE5", fg: "#ffffff" },
+      { label: "AWS", slug: "aws", bg: "#FF9900", fg: "#111111" },
+      { label: "TensorFlow", slug: "tensorflow", bg: "#FF6F00", fg: "#ffffff" },
+      { label: "PyTorch", slug: "pytorch", bg: "#EE4C2C", fg: "#ffffff" },
+      { label: "MLOps", bg: "#3730A3", fg: "#ffffff" },
+      { label: "Accessibility", bg: "#047857", fg: "#ffffff" },
+      { label: "Design Systems", bg: "#8B5CF6", fg: "#ffffff" },
+      { label: "Prototyping", bg: "#FB7185", fg: "#111111" },
+      { label: "Wireframing", bg: "#F59E0B", fg: "#111111" },
+      { label: "CI/CD", bg: "#0F172A", fg: "#ffffff" },
+      { label: "Prompt Engineering", bg: "#4338CA", fg: "#ffffff" },
+    ],
   },
-  { label: "React", slug: "react", bg: "#1FB6CB", fg: "#ffffff" },
-  { label: "Next.js", slug: "nextdotjs", bg: "#1f1f1f", fg: "#ffffff" },
-  { label: "TypeScript", slug: "typescript", bg: "#2F74C0", fg: "#ffffff" },
-  { label: "shadcn/ui", slug: "shadcnui", bg: "#5b54ff", fg: "#ffffff" },
-  { label: "Cursor", slug: "cursor", bg: "#111111", fg: "#ffffff" },
-  { label: "GSAP", slug: "gsap", bg: "#0AE448", fg: "#0a0a0a" },
-  { label: "GitHub", slug: "github", bg: "#181717", fg: "#ffffff" },
-  { label: "Vercel", slug: "vercel", bg: "#0a0a0a", fg: "#ffffff" },
-  { label: "Tailwind CSS", slug: "tailwindcss", bg: "#2BBCF5", fg: "#ffffff" },
+  {
+    key: "design",
+    label: "Design",
+    chips: [
+      { label: "Figma", slug: "figma", bg: "#1f1f1f", fg: "#ffffff", iconUrl: "https://svgl.app/library/figma.svg" },
+      { label: "Adobe XD", slug: "adobexd", bg: "#FF61F6", fg: "#111111" },
+      { label: "Design Systems", bg: "#8B5CF6", fg: "#ffffff" },
+      { label: "Wireframing", bg: "#F59E0B", fg: "#111111" },
+      { label: "Prototyping", bg: "#FB7185", fg: "#111111" },
+      { label: "Accessibility", bg: "#047857", fg: "#ffffff" },
+      { label: "Motion Design", bg: "#22C55E", fg: "#111111" },
+    ],
+  },
+  {
+    key: "frontend",
+    label: "Frontend",
+    chips: [
+      { label: "React", slug: "react", bg: "#1FB6CB", fg: "#ffffff" },
+      { label: "Next.js", slug: "nextdotjs", bg: "#1f1f1f", fg: "#ffffff" },
+      { label: "TypeScript", slug: "typescript", bg: "#2F74C0", fg: "#ffffff" },
+      { label: "Tailwind CSS", slug: "tailwindcss", bg: "#2BBCF5", fg: "#ffffff" },
+      { label: "shadcn/ui", slug: "shadcnui", bg: "#5b54ff", fg: "#ffffff" },
+      { label: "Framer Motion", slug: "framermotion", bg: "#0a84ff", fg: "#ffffff" },
+      { label: "GSAP", slug: "gsap", bg: "#0AE448", fg: "#0a0a0a" },
+      { label: "Vite", slug: "vite", bg: "#646cff", fg: "#ffffff" },
+    ],
+  },
+  {
+    key: "backend",
+    label: "Backend",
+    chips: [
+      { label: "Java", slug: "java", bg: "#007396", fg: "#ffffff" },
+      { label: "Spring Boot", slug: "springboot", bg: "#6DB33F", fg: "#ffffff" },
+      { label: "Node.js", slug: "nodedotjs", bg: "#3C873A", fg: "#ffffff" },
+      { label: "Express", slug: "express", bg: "#000000", fg: "#ffffff" },
+      { label: "NestJS", slug: "nestjs", bg: "#E0234E", fg: "#ffffff" },
+      { label: "MongoDB", slug: "mongodb", bg: "#47A248", fg: "#ffffff" },
+      { label: "PostgreSQL", slug: "postgresql", bg: "#336791", fg: "#ffffff" },
+      { label: "Kafka", slug: "apachekafka", bg: "#231f20", fg: "#ffffff" },
+      { label: "Redis", slug: "redis", bg: "#D82C20", fg: "#ffffff" },
+    ],
+  },
+  {
+    key: "devops",
+    label: "DevOps",
+    chips: [
+      { label: "Docker", slug: "docker", bg: "#2496ED", fg: "#ffffff" },
+      { label: "Kubernetes", slug: "kubernetes", bg: "#326CE5", fg: "#ffffff" },
+      { label: "AWS", slug: "aws", bg: "#FF9900", fg: "#111111" },
+      { label: "CI/CD", bg: "#0F172A", fg: "#ffffff" },
+      { label: "Terraform", slug: "terraform", bg: "#6D7A8D", fg: "#ffffff" },
+      { label: "GitHub Actions", slug: "githubactions", bg: "#222222", fg: "#ffffff" },
+    ],
+  },
+  {
+    key: "ai",
+    label: "AI",
+    chips: [
+      { label: "Python", slug: "python", bg: "#3776AB", fg: "#ffffff" },
+      { label: "TensorFlow", slug: "tensorflow", bg: "#FF6F00", fg: "#ffffff" },
+      { label: "PyTorch", slug: "pytorch", bg: "#EE4C2C", fg: "#ffffff" },
+      { label: "MLOps", bg: "#3730A3", fg: "#ffffff" },
+      { label: "Prompt Engineering", bg: "#4338CA", fg: "#ffffff" },
+      { label: "Data Pipelines", bg: "#0F766E", fg: "#ffffff" },
+    ],
+  },
 ];
 
 const CHIP_RADIUS = 14;
@@ -46,6 +137,11 @@ export function Stack(): ReactNode {
   const measureRef = useRef<HTMLDivElement | null>(null);
   const chipRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [resetKey, setResetKey] = useState(0);
+  const [activeCategory, setActiveCategory] = useState("all");
+
+  const activeChips =
+    CATEGORIES.find((category) => category.key === activeCategory)?.chips ??
+    CATEGORIES[0]?.chips ?? [];
 
   useEffect(() => {
     const container = containerRef.current;
@@ -107,7 +203,7 @@ export function Stack(): ReactNode {
       );
       World.add(world, [floor, leftWall, rightWall]);
 
-      const states: ChipState[] = CHIPS.map((chip, i) => {
+      const states: ChipState[] = activeChips.map((chip, i) => {
         const dim = dims[i] ?? { w: 120, h: 36 };
         const { w, h } = dim;
         const halfW = w / 2;
@@ -208,36 +304,61 @@ export function Stack(): ReactNode {
       cancelled = true;
       cleanup?.();
     };
-  }, [resetKey]);
+  }, [resetKey, activeCategory, activeChips]);
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-3">
-        <h3 className="text-foreground text-[15px] font-semibold tracking-tight">
-          Stack
-        </h3>
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h3 className="text-foreground text-[15px] font-semibold tracking-tight">
+              What I do
+            </h3>
+            <p className="text-foreground/70 text-sm tracking-tight">
+              Pick a category and watch the relevant toolbox fall into place.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setResetKey((k) => k + 1)}
+            aria-label="Reset stack"
+            className="focus-ring border-foreground/8 bg-background text-foreground/70 hover:text-foreground inline-flex h-9 w-9 items-center justify-center rounded-xl border transition-colors"
+          >
+            <RotateCcw className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="inline-flex flex-wrap rounded-full border border-foreground/10 bg-background/80 p-1 shadow-sm">
+          {CATEGORIES.map((category) => {
+            const active = category.key === activeCategory;
+            return (
+              <button
+                key={category.key}
+                type="button"
+                onClick={() => {
+                  setActiveCategory(category.key);
+                  setResetKey((k) => k + 1);
+                }}
+                className={`rounded-full px-3 py-2 text-sm font-medium transition ${
+                  active
+                    ? "bg-foreground text-background shadow-sm"
+                    : "text-foreground/70 hover:text-foreground"
+                }`}
+              >
+                {category.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <div className="border-foreground/5 bg-foreground/2 dark:bg-foreground/5 relative h-40 overflow-hidden rounded-4xl border sm:h-64">
-        <button
-          type="button"
-          onClick={() => setResetKey((k) => k + 1)}
-          aria-label="Reset stack"
-          className="focus-ring border-foreground/8 bg-background text-foreground/70 hover:text-foreground absolute top-3 right-3 z-20 inline-flex h-9 w-9 items-center justify-center rounded-xl border transition-colors"
-        >
-          <RotateCcw
-            className="h-4 w-4"
-            strokeWidth={2.25}
-            aria-hidden="true"
-          />
-        </button>
-
+      <div className="border-foreground/5 bg-foreground/2 dark:bg-foreground/5 relative h-52 overflow-hidden rounded-4xl border sm:h-80">
         <div
           ref={measureRef}
           aria-hidden="true"
           className="pointer-events-none invisible absolute top-0 left-0 flex flex-wrap gap-2"
         >
-          {CHIPS.map((chip) => (
+          {activeChips.map((chip) => (
             <ChipPill key={`m-${chip.label}`} chip={chip} />
           ))}
         </div>
@@ -247,7 +368,7 @@ export function Stack(): ReactNode {
           className="absolute inset-0 cursor-grab select-none"
           style={{ touchAction: "none" }}
         >
-          {CHIPS.map((chip, i) => (
+          {activeChips.map((chip, i) => (
             <div
               key={`${resetKey}-${chip.label}`}
               ref={(el) => {
@@ -281,14 +402,20 @@ function ChipPill({ chip }: { chip: Chip }): ReactNode {
         style={{ borderRadius: `${ICON_RADIUS}px` }}
         aria-hidden="true"
       >
-        <img
-          src={chip.iconUrl ?? `https://cdn.simpleicons.org/${chip.slug}`}
-          alt=""
-          width={18}
-          height={18}
-          className="h-5 w-5"
-          draggable={false}
-        />
+        {chip.slug || chip.iconUrl ? (
+          <img
+            src={chip.iconUrl ?? `https://cdn.simpleicons.org/${chip.slug}`}
+            alt=""
+            width={18}
+            height={18}
+            className="h-5 w-5"
+            draggable={false}
+          />
+        ) : (
+          <span className="text-[12px] font-semibold uppercase" style={{ color: chip.fg }}>
+            {chip.label.charAt(0)}
+          </span>
+        )}
       </span>
       <span>{chip.label}</span>
     </div>

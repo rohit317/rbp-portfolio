@@ -4,7 +4,6 @@ import { Moon, Sun } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   useEffect,
   useLayoutEffect,
@@ -20,14 +19,14 @@ type NavItem = {
 };
 
 const NAV_ITEMS: readonly NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Projects", href: "/projects" },
-  { label: "About", href: "/about" },
+  { label: "Home", href: "#top" },
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
 ];
 
 function useIsMounted(): boolean {
   return useSyncExternalStore(
-    () => () => {},
+    () => () => { },
     () => true,
     () => false
   );
@@ -93,18 +92,16 @@ function NavThemeToggle(): ReactNode {
     >
       <span aria-hidden="true" className="relative h-4 w-4">
         <Sun
-          className={`absolute inset-0 h-4 w-4 text-foreground transition-all duration-300 ${
-            mounted && isDark
+          className={`absolute inset-0 h-4 w-4 text-foreground transition-all duration-300 ${mounted && isDark
               ? "rotate-0 scale-100 opacity-100"
               : "-rotate-90 scale-0 opacity-0"
-          }`}
+            }`}
         />
         <Moon
-          className={`absolute inset-0 h-4 w-4 text-foreground transition-all duration-300 ${
-            mounted && !isDark
+          className={`absolute inset-0 h-4 w-4 text-foreground transition-all duration-300 ${mounted && !isDark
               ? "rotate-0 scale-100 opacity-100"
               : "rotate-90 scale-0 opacity-0"
-          }`}
+            }`}
         />
       </span>
     </button>
@@ -112,7 +109,6 @@ function NavThemeToggle(): ReactNode {
 }
 
 export function Nav(): ReactNode {
-  const pathname = usePathname();
   const listRef = useRef<HTMLUListElement>(null);
   const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
   const [pillRect, setPillRect] = useState<{
@@ -120,12 +116,47 @@ export function Nav(): ReactNode {
     width: number;
   } | null>(null);
   const [hasMeasured, setHasMeasured] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
-  const activeIndex = NAV_ITEMS.findIndex((item) =>
-    item.href === "/"
-      ? pathname === "/"
-      : pathname === item.href || pathname.startsWith(`${item.href}/`)
-  );
+  useEffect(() => {
+    const sectionIds = ["about", "projects"];
+
+    const updateActiveSection = (): void => {
+      if (typeof window === "undefined") {
+        return;
+      }
+
+      const sections = sectionIds
+        .map((id) => ({
+          id,
+          element: document.getElementById(id),
+        }))
+        .filter((item): item is { id: string; element: HTMLElement } =>
+          Boolean(item.element)
+        );
+
+      const offset = window.innerHeight * 0.35;
+      let nextIndex = 0;
+
+      for (const [index, section] of sections.entries()) {
+        const top = section.element.getBoundingClientRect().top;
+        if (top <= offset) {
+          nextIndex = index + 1;
+        }
+      }
+
+      setActiveIndex(nextIndex);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     const list = listRef.current;
@@ -141,7 +172,7 @@ export function Nav(): ReactNode {
       x: itemRect.left - listRect.left,
       width: itemRect.width,
     });
-  }, [activeIndex, pathname]);
+  }, [activeIndex]);
 
   useEffect(() => {
     if (!pillRect) return;

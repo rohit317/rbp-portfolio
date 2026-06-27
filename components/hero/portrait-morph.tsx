@@ -212,7 +212,7 @@ export function PortraitMorph({
       time += dt;
 
       const target = hoverRef.current ? 1 : 0;
-      const stiffness = hoverRef.current ? 2.4 : 2.0;
+      const stiffness = hoverRef.current ? 4.4 : 3.0;
       const k = 1 - Math.exp(-stiffness * dt);
       progressRef.current += (target - progressRef.current) * k;
 

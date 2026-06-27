@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { HeroCtas } from "./hero-ctas";
 import { FadeIn, ScaleUnblur } from "@/components/ui/motion-primitives";
 import { PortraitMorph } from "./portrait-morph";
+import TextType from "../ui/text-type";
 
 const PORTRAIT_SRC = "/josh.webp";
 const PORTRAIT_HOVER_SRC = "/josh_wave.webp";
@@ -14,23 +15,28 @@ export function Hero(): ReactNode {
         <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-8">
           <FadeIn className="flex flex-col gap-4">
             <p className="text-[20px] leading-tight tracking-tight font-medium text-foreground">
-              Hey
+              Hi
               <span aria-hidden="true" className="mx-0.5">
                 👋
               </span>
-              , I&rsquo;m Josh
+              , I&rsquo;m Rohit
             </p>
 
-            <h1 className="text-[2.75rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[2.5rem] lg:text-[3.65rem]">
-              <span className="block whitespace-nowrap">
-                Design engineer &
-              </span>
-              <span className="block whitespace-nowrap">AI enthusiast</span>
+            <h1 className="text-[2.3rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[2.4rem] lg:text-[3.35rem]">
+              <TextType
+                text={["Full Stack Developer", "Software Engineer", "Tech Enthusiast"]}
+                typingSpeed={85}
+                pauseDuration={2500}
+                showCursor
+                cursorCharacter="_"
+                deletingSpeed={50}
+                variableSpeed={{ min: 60, max: 120 }}
+                cursorBlinkDuration={0.75}
+              />
             </h1>
 
-            <p className="max-w-[34ch] text-[22px] leading-[1.4] tracking-tight text-foreground/65">
-              Independent engineer focused on interfaces that feel calm,
-              considered, and quietly fast.
+            <p className="max-w-[34ch] text-[18px] leading-[1.4] tracking-tight text-foreground/65">
+              I build full stack web apps with modern frontends, scalable backends, cloud services, and AI integrations for smooth, intelligent user experiences.
             </p>
 
             <HeroCtas />

@@ -87,7 +87,7 @@ const D = {
   colorLowA: [0.18, 0.2, 0.3] as [number, number, number],
   colorHighA: [0.55, 0.38, 0.32] as [number, number, number],
   fadeRx: 1.4,
-  fadeRy: 0.6,
+  fadeRy: 0.9,
   fadeCx: 0.5,
   fadeCy: 0.0,
 };
