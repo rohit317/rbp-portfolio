@@ -62,7 +62,7 @@ export default function HomePage(): ReactNode {
       </section>
 
       <div id="projects" className="relative w-full">
-        <FadeIn triggerOnce amount={0.25}>
+        <FadeIn triggerOnce amount={0.05}>
           <Projects withHeadline />
         </FadeIn>
       </div>

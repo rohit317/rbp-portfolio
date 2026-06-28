@@ -185,11 +185,22 @@ export function ShaderFlow(props: ShaderFlowProps): ReactNode {
     const scene = new Transform();
     mesh.setParent(scene);
 
-    const onResize = (): void => {
+    let resizeTimeout = 0;
+    const resize = (): void => {
       const w = el.clientWidth;
       const h = el.clientHeight;
       r.setSize(w, h);
       p.uniforms.uR.value = [gl.drawingBufferWidth, gl.drawingBufferHeight];
+    };
+
+    const onResize = (): void => {
+      if (resizeTimeout) {
+        window.clearTimeout(resizeTimeout);
+      }
+      resizeTimeout = window.setTimeout(() => {
+        resizeTimeout = 0;
+        resize();
+      }, 180);
     };
 
     onResize();

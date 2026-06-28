@@ -22,17 +22,19 @@ export function Hero(): ReactNode {
               , I&rsquo;m Rohit
             </p>
 
-            <h1 className="text-[2.3rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[2.4rem] lg:text-[3.35rem]">
-              <TextType
-                text={["Full Stack Developer", "Software Engineer", "Tech Enthusiast"]}
-                typingSpeed={85}
-                pauseDuration={2500}
-                showCursor
-                cursorCharacter="_"
-                deletingSpeed={50}
-                variableSpeed={{ min: 60, max: 120 }}
-                cursorBlinkDuration={0.75}
-              />
+            <h1 className="text-[clamp(2rem,6vw,3.35rem)] font-medium leading-[1.05] tracking-tight text-foreground md:text-[clamp(2.4rem,5vw,3.35rem)] lg:text-[3.35rem]">
+              <span className="inline-block whitespace-nowrap">
+                <TextType
+                  text={["Full Stack Developer", "Software Engineer", "Tech Enthusiast"]}
+                  typingSpeed={85}
+                  pauseDuration={2500}
+                  showCursor
+                  cursorCharacter="_"
+                  deletingSpeed={50}
+                  variableSpeed={{ min: 60, max: 120 }}
+                  cursorBlinkDuration={0.75}
+                />
+              </span>
             </h1>
 
             <p className="max-w-[34ch] text-[18px] leading-[1.4] tracking-tight text-foreground/65">

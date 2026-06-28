@@ -1,6 +1,7 @@
 "use client";
 
 import { RotateCcw } from "lucide-react";
+import { ShaderFlow } from "../shaders/shader-flow";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type Chip = {
@@ -15,12 +16,14 @@ type Category = {
   key: string;
   label: string;
   chips: Chip[];
+  description?: string;
 };
 
 const CATEGORIES: Category[] = [
   {
     key: "all",
     label: "All",
+    description: "A broad toolbox spanning design, frontend, backend, DevOps, and AI.",
     chips: [
       { label: "Figma", slug: "figma", bg: "#1f1f1f", fg: "#ffffff", iconUrl: "https://svgl.app/library/figma.svg" },
       { label: "React", slug: "react", bg: "#1FB6CB", fg: "#ffffff" },
@@ -56,6 +59,7 @@ const CATEGORIES: Category[] = [
   {
     key: "design",
     label: "Design",
+    description: "Systematic visual design, prototyping, and accessible UI foundations.",
     chips: [
       { label: "Figma", slug: "figma", bg: "#1f1f1f", fg: "#ffffff", iconUrl: "https://svgl.app/library/figma.svg" },
       { label: "Adobe XD", slug: "adobexd", bg: "#FF61F6", fg: "#111111" },
@@ -69,6 +73,7 @@ const CATEGORIES: Category[] = [
   {
     key: "frontend",
     label: "Frontend",
+    description: "Component-driven interfaces, responsive systems, and motion-rich UIs.",
     chips: [
       { label: "React", slug: "react", bg: "#1FB6CB", fg: "#ffffff" },
       { label: "Next.js", slug: "nextdotjs", bg: "#1f1f1f", fg: "#ffffff" },
@@ -83,6 +88,7 @@ const CATEGORIES: Category[] = [
   {
     key: "backend",
     label: "Backend",
+    description: "APIs, services, data models, and resilient server-side architecture.",
     chips: [
       { label: "Java", slug: "java", bg: "#007396", fg: "#ffffff" },
       { label: "Spring Boot", slug: "springboot", bg: "#6DB33F", fg: "#ffffff" },
@@ -98,6 +104,7 @@ const CATEGORIES: Category[] = [
   {
     key: "devops",
     label: "DevOps",
+    description: "Container orchestration, CI/CD, and cloud-native infrastructure.",
     chips: [
       { label: "Docker", slug: "docker", bg: "#2496ED", fg: "#ffffff" },
       { label: "Kubernetes", slug: "kubernetes", bg: "#326CE5", fg: "#ffffff" },
@@ -110,6 +117,7 @@ const CATEGORIES: Category[] = [
   {
     key: "ai",
     label: "AI",
+    description: "Machine learning tooling, data pipelines, and AI-driven automation.",
     chips: [
       { label: "Python", slug: "python", bg: "#3776AB", fg: "#ffffff" },
       { label: "TensorFlow", slug: "tensorflow", bg: "#FF6F00", fg: "#ffffff" },
@@ -139,9 +147,18 @@ export function Stack(): ReactNode {
   const [resetKey, setResetKey] = useState(0);
   const [activeCategory, setActiveCategory] = useState("all");
 
-  const activeChips =
-    CATEGORIES.find((category) => category.key === activeCategory)?.chips ??
-    CATEGORIES[0]?.chips ?? [];
+  const activeCategoryInfo =
+    CATEGORIES.find((category) => category.key === activeCategory) ??
+    CATEGORIES[0]!;
+  const activeChips = activeCategoryInfo.chips;
+  const categoryDescription =
+    activeCategoryInfo.description ??
+    "A focused toolset for the selected area.";
+
+  const matterHeight =
+    activeCategory === "all"
+      ? Math.min(22, 19 + Math.max(0, activeChips.length - 6) * 0.2)
+      : 18.5;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -253,6 +270,30 @@ export function Stack(): ReactNode {
         container.style.cursor = "grab";
       });
 
+      const releasePointer = (): void => {
+        if (mouseConstraint.constraint.bodyB || (mouseConstraint as any).body) {
+          if ((mouseConstraint as any).body) {
+            Events.trigger(mouseConstraint, "enddrag", {
+              mouse,
+              body: (mouseConstraint as any).body,
+            });
+          }
+
+          const constraint = mouseConstraint.constraint as any;
+          const mouseConstraintAny = mouseConstraint as any;
+
+          constraint.bodyB = null;
+          constraint.pointB = null;
+          mouseConstraintAny.body = null;
+          container.style.cursor = "grab";
+        }
+
+        Mouse.clearSourceEvents(mouse);
+      };
+
+      window.addEventListener("mouseup", releasePointer, { passive: true });
+      window.addEventListener("touchend", releasePointer, { passive: true });
+
       const runner = Runner.create();
       Runner.run(runner, engine);
 
@@ -293,6 +334,8 @@ export function Stack(): ReactNode {
 
       cleanup = () => {
         cancelAnimationFrame(raf);
+        window.removeEventListener("mouseup", releasePointer);
+        window.removeEventListener("touchend", releasePointer);
         ro.disconnect();
         Runner.stop(runner);
         World.clear(world, false);
@@ -314,9 +357,11 @@ export function Stack(): ReactNode {
             <h3 className="text-foreground text-[15px] font-semibold tracking-tight">
               What I do
             </h3>
-            <p className="text-foreground/70 text-sm tracking-tight">
-              Pick a category and watch the relevant toolbox fall into place.
-            </p>
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              <p className="text-foreground/70 text-sm tracking-tight">
+                {categoryDescription}
+              </p>
+            </div>
           </div>
           <button
             type="button"
@@ -328,7 +373,7 @@ export function Stack(): ReactNode {
           </button>
         </div>
 
-        <div className="inline-flex flex-wrap rounded-full border border-foreground/10 bg-background/80 p-1 shadow-sm">
+        <div className="flex flex-nowrap gap-2 overflow-x-auto rounded-3xl border border-foreground/10 bg-background/80 p-1 shadow-sm hide-scrollbar">
           {CATEGORIES.map((category) => {
             const active = category.key === activeCategory;
             return (
@@ -339,11 +384,10 @@ export function Stack(): ReactNode {
                   setActiveCategory(category.key);
                   setResetKey((k) => k + 1);
                 }}
-                className={`rounded-full px-3 py-2 text-sm font-medium transition ${
-                  active
-                    ? "bg-foreground text-background shadow-sm"
-                    : "text-foreground/70 hover:text-foreground"
-                }`}
+                className={`flex-shrink-0 rounded-3xl px-3 py-2 text-sm font-medium transition ${active
+                  ? "bg-foreground text-background shadow-sm"
+                  : "text-foreground/70 hover:text-foreground"
+                  }`}
               >
                 {category.label}
               </button>
@@ -352,7 +396,18 @@ export function Stack(): ReactNode {
         </div>
       </div>
 
-      <div className="border-foreground/5 bg-foreground/2 dark:bg-foreground/5 relative h-52 overflow-hidden rounded-4xl border sm:h-80">
+      <div
+        className="border-foreground/10 bg-foreground/2 dark:bg-foreground/5 relative overflow-hidden rounded-4xl border shadow-[inset_0_16px_48px_-32px_rgba(15,23,42,0.55)] transition-[height,box-shadow] duration-500 ease-out"
+        style={{ minHeight: "18rem", height: `${matterHeight}rem` }}
+      >
+        <ShaderFlow
+          scale={6}
+          brightness={1.7}
+          colorLowA={[0.1, 0.1, 0.1]}
+          colorHighA={[0.9, 0.9, 0.9]}
+          className="absolute inset-0 h-full w-full opacity-100 rotate-180"
+        />
+        <div className="absolute inset-0 bg-foreground/10/70 backdrop-blur-sm" />
         <div
           ref={measureRef}
           aria-hidden="true"
