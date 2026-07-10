@@ -1,8 +1,9 @@
 "use client";
 
 import { RotateCcw } from "lucide-react";
-import { ShaderFlow } from "../shaders/shader-flow";
+import { useTheme } from "next-themes";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import LiquidEther from "../ui/liquid-ether";
 
 type Chip = {
   label: string;
@@ -141,6 +142,7 @@ type ChipState = {
 };
 
 export function Stack(): ReactNode {
+  const { resolvedTheme } = useTheme();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const measureRef = useRef<HTMLDivElement | null>(null);
   const chipRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -400,79 +402,101 @@ export function Stack(): ReactNode {
         className="border-foreground/10 bg-foreground/2 dark:bg-foreground/5 relative overflow-hidden rounded-4xl border shadow-[inset_0_16px_48px_-32px_rgba(15,23,42,0.55)] transition-[height,box-shadow] duration-500 ease-out"
         style={{ minHeight: "18rem", height: `${matterHeight}rem` }}
       >
-        <ShaderFlow
+        {/* <ShaderFlow
           scale={6}
           brightness={1.7}
           colorLowA={[0.1, 0.1, 0.1]}
           colorHighA={[0.9, 0.9, 0.9]}
           className="absolute inset-0 h-full w-full opacity-100 rotate-180"
-        />
-        <div className="absolute inset-0 bg-foreground/10/70 backdrop-blur-sm" />
-        <div
-          ref={measureRef}
-          aria-hidden="true"
-          className="pointer-events-none invisible absolute top-0 left-0 flex flex-wrap gap-2"
-        >
-          {activeChips.map((chip) => (
-            <ChipPill key={`m-${chip.label}`} chip={chip} />
-          ))}
-        </div>
+        /> */}
 
-        <div
-          ref={containerRef}
-          className="absolute inset-0 cursor-grab select-none"
-          style={{ touchAction: "none" }}
-        >
-          {activeChips.map((chip, i) => (
-            <div
-              key={`${resetKey}-${chip.label}`}
-              ref={(el) => {
-                chipRefs.current[i] = el;
-              }}
-              data-stack-chip
-              className="pointer-events-none absolute top-0 left-0 will-change-transform"
-              style={{ transform: "translate3d(-9999px, -9999px, 0)" }}
-            >
-              <ChipPill chip={chip} />
-            </div>
-          ))}
+        <div style={{ width: '100%', height: 600, position: 'relative' }}>
+          {resolvedTheme !== 'light' ? (
+            <LiquidEther
+              colors={['#5227FF', '#FF9FFC', '#B497CF']}
+              mouseForce={20}
+              cursorSize={50}
+              isViscous
+              viscous={30}
+              iterationsViscous={32}
+              iterationsPoisson={32}
+              resolution={0.5}
+              isBounce={false}
+              autoDemo
+              autoSpeed={0.5}
+              autoIntensity={2.2}
+              takeoverDuration={0.25}
+              autoResumeDelay={3000}
+              autoRampDuration={0.6}
+            />
+          ) : null}
+          </div>
+          <div className="absolute inset-0 bg-foreground/10/70 backdrop-blur-sm" />
+          <div
+            ref={measureRef}
+            aria-hidden="true"
+            className="pointer-events-none invisible absolute top-0 left-0 flex flex-wrap gap-2"
+          >
+            {activeChips.map((chip) => (
+              <ChipPill key={`m-${chip.label}`} chip={chip} />
+            ))}
+          </div>
+
+          <div
+            ref={containerRef}
+            className="absolute inset-0 cursor-grab select-none"
+            style={{ touchAction: "none" }}
+          >
+            {activeChips.map((chip, i) => (
+              <div
+                key={`${resetKey}-${chip.label}`}
+                ref={(el) => {
+                  chipRefs.current[i] = el;
+                }}
+                data-stack-chip
+                className="pointer-events-none absolute top-0 left-0 will-change-transform"
+                style={{ transform: "translate3d(-9999px, -9999px, 0)" }}
+              >
+                <ChipPill chip={chip} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
+      );
 }
 
-function ChipPill({ chip }: { chip: Chip }): ReactNode {
+      function ChipPill({chip}: {chip: Chip }): ReactNode {
   return (
-    <div
-      className="dark:ring-1 dark:ring-white/15 inline-flex items-center gap-2 p-1 pr-2 text-[15px] font-medium tracking-tight sm:text-[16px]"
-      style={{
-        backgroundColor: chip.bg,
-        color: chip.fg,
-        borderRadius: `${CHIP_RADIUS}px`,
-      }}
-    >
-      <span
-        className="inline-flex h-8 w-8 items-center justify-center bg-white/95"
-        style={{ borderRadius: `${ICON_RADIUS}px` }}
-        aria-hidden="true"
+      <div
+        className="dark:ring-1 dark:ring-white/15 inline-flex items-center gap-2 p-1 pr-2 text-[15px] font-medium tracking-tight sm:text-[16px]"
+        style={{
+          backgroundColor: chip.bg,
+          color: chip.fg,
+          borderRadius: `${CHIP_RADIUS}px`,
+        }}
       >
-        {chip.slug || chip.iconUrl ? (
-          <img
-            src={chip.iconUrl ?? `https://cdn.simpleicons.org/${chip.slug}`}
-            alt=""
-            width={18}
-            height={18}
-            className="h-5 w-5"
-            draggable={false}
-          />
-        ) : (
-          <span className="text-[12px] font-semibold uppercase" style={{ color: chip.fg }}>
-            {chip.label.charAt(0)}
-          </span>
-        )}
-      </span>
-      <span>{chip.label}</span>
-    </div>
-  );
+        <span
+          className="inline-flex h-8 w-8 items-center justify-center bg-white/95"
+          style={{ borderRadius: `${ICON_RADIUS}px` }}
+          aria-hidden="true"
+        >
+          {chip.slug || chip.iconUrl ? (
+            <img
+              src={chip.iconUrl ?? `https://cdn.simpleicons.org/${chip.slug}`}
+              alt=""
+              width={18}
+              height={18}
+              className="h-5 w-5"
+              draggable={false}
+            />
+          ) : (
+            <span className="text-[12px] font-semibold uppercase" style={{ color: chip.fg }}>
+              {chip.label.charAt(0)}
+            </span>
+          )}
+        </span>
+        <span>{chip.label}</span>
+      </div>
+      );
 }

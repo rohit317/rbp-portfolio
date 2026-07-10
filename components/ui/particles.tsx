@@ -171,7 +171,9 @@ const Particles: React.FC<ParticlesProps> = ({
       const r = Math.cbrt(Math.random());
       positions.set([x * r, y * r, z * r], i * 3);
       randoms.set([Math.random(), Math.random(), Math.random(), Math.random()], i * 4);
-      const col = hexToRgb(palette[Math.floor(Math.random() * palette.length)]);
+      const paletteIndex = Math.floor(Math.random() * palette.length);
+      const paletteColor = palette[paletteIndex] ?? defaultColors[0] ?? '#ffffff';
+      const col = hexToRgb(paletteColor);
       colors.set(col, i * 3);
     }
 
@@ -187,7 +189,7 @@ const Particles: React.FC<ParticlesProps> = ({
       uniforms: {
         uTime: { value: 0 },
         uSpread: { value: particleSpread },
-        uBaseSize: { value: particleBaseSize * pixelRatio },
+        uBaseSize: { value: particleBaseSize },
         uSizeRandomness: { value: sizeRandomness },
         uAlphaParticles: { value: alphaParticles ? 1 : 0 }
       },
@@ -195,7 +197,7 @@ const Particles: React.FC<ParticlesProps> = ({
       depthTest: false
     });
 
-    const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program });
+    const particles = new Mesh(gl, { geometry, program, mode: gl.POINTS });
 
     let animationFrameId: number;
     let lastTime = performance.now();

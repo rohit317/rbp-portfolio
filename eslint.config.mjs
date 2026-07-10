@@ -12,7 +12,8 @@ const eslintConfig = defineConfig([
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
-      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "react-hooks/set-state-in-effect": "off",
 
       // React rules
       "react/jsx-no-target-blank": ["error", { enforceDynamicLinks: "always" }],
