@@ -1,3 +1,3 @@
 export const features = {
-  smoothScroll: true,
+  smoothScroll: false,
 };

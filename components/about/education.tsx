@@ -39,7 +39,7 @@ export function Education(): ReactNode {
       <h3 className="text-foreground text-[15px] font-semibold tracking-tight">
         Education
       </h3>
-      <BorderGlow className="w-full p-0" backgroundColor="var(--background)" animated>
+      <BorderGlow className="w-full p-0" backgroundColor="var(--background)" animated animateOnInView>
         <div className="bg-foreground/2 dark:bg-foreground/5 relative overflow-hidden rounded-3xl p-2 sm:p-4">
           <ul className="flex flex-col gap-2">
             {ENTRIES.map((entry) => (

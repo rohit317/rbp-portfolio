@@ -11,6 +11,7 @@ interface BorderGlowProps {
   glowIntensity?: number;
   coneSpread?: number;
   animated?: boolean;
+  animateOnInView?: boolean;
   colors?: string[];
   fillOpacity?: number;
 }
@@ -89,6 +90,7 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
   glowIntensity = 1.2,
   coneSpread = 25,
   animated = false,
+  animateOnInView = false,
   colors = ['#c084fc', '#f472b6', '#38bdf8'],
   fillOpacity = 0.75,
 }) => {
@@ -97,6 +99,7 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
   const [cursorAngle, setCursorAngle] = useState(45);
   const [edgeProximity, setEdgeProximity] = useState(0);
   const [sweepActive, setSweepActive] = useState(false);
+  const [hasEnteredView, setHasEnteredView] = useState(!animateOnInView);
 
   const getCenterOfElement = useCallback((el: HTMLElement): [number, number] => {
     const { width, height } = el.getBoundingClientRect();
@@ -136,7 +139,33 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
   }, [getEdgeProximity, getCursorAngle]);
 
   useEffect(() => {
-    if (!animated) return;
+    if (!animateOnInView || hasEnteredView) return;
+    const card = cardRef.current;
+    if (!card) return;
+
+    if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') {
+      setHasEnteredView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (!entry?.isIntersecting) return;
+        setHasEnteredView(true);
+        observer.disconnect();
+      },
+      {
+        threshold: 0.2,
+      }
+    );
+
+    observer.observe(card);
+    return () => observer.disconnect();
+  }, [animateOnInView, hasEnteredView]);
+
+  useEffect(() => {
+    if (!animated || !hasEnteredView) return;
     const angleStart = 110;
     const angleEnd = 465;
     setSweepActive(true);
@@ -153,7 +182,7 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
       onUpdate: v => setEdgeProximity(v / 100),
       onEnd: () => setSweepActive(false),
     });
-  }, [animated]);
+  }, [animated, hasEnteredView]);
 
   const colorSensitivity = edgeSensitivity + 20;
   const isVisible = isHovered || sweepActive;

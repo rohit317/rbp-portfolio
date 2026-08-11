@@ -143,11 +143,13 @@ type ChipState = {
 
 export function Stack(): ReactNode {
   const { resolvedTheme } = useTheme();
+  const stackRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const measureRef = useRef<HTMLDivElement | null>(null);
   const chipRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [resetKey, setResetKey] = useState(0);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [hasEnteredView, setHasEnteredView] = useState(false);
 
   const activeCategoryInfo =
     CATEGORIES.find((category) => category.key === activeCategory) ??
@@ -163,6 +165,33 @@ export function Stack(): ReactNode {
       : 18.5;
 
   useEffect(() => {
+    if (hasEnteredView) return;
+    const stackElement = stackRef.current;
+    if (!stackElement) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      setHasEnteredView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (!entry?.isIntersecting) return;
+        setHasEnteredView(true);
+        observer.disconnect();
+      },
+      {
+        threshold: 0.2,
+      },
+    );
+
+    observer.observe(stackElement);
+    return () => observer.disconnect();
+  }, [hasEnteredView]);
+
+  useEffect(() => {
+    if (!hasEnteredView) return;
     const container = containerRef.current;
     const measure = measureRef.current;
     if (!container || !measure) return;
@@ -349,10 +378,10 @@ export function Stack(): ReactNode {
       cancelled = true;
       cleanup?.();
     };
-  }, [resetKey, activeCategory, activeChips]);
+  }, [resetKey, activeCategory, activeChips, hasEnteredView]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div ref={stackRef} className="flex flex-col gap-4">
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between gap-4">
           <div>

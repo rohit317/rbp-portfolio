@@ -1,118 +1,345 @@
+"use client";
+
 import {
   ArrowRight,
-  Bot,
+  ChevronLeft,
+  ChevronRight,
   Compass,
-  Layers,
-  LineChart,
+  KanbanSquare,
   Sparkles,
   Wand2,
+  X,
 } from "lucide-react";
-import type { ComponentType, ReactNode } from "react";
+import { createPortal } from "react-dom";
+import { useEffect, useState, type ComponentType, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { FadeIn } from "@/components/ui/motion-primitives";
 import TiltedCard from "../ui/tilted-card";
 
-/**
- * Project imagery below is mockup-only. All visuals are sourced from
- * Dribbble and credit belongs to the original creators on dribbble.com.
- * Replace these with your own work before shipping.
- */
+function escapeXml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+function createProjectArtwork({
+  accentA,
+  accentB,
+  initials,
+  subtitle,
+  title,
+}: {
+  accentA: string;
+  accentB: string;
+  initials: string;
+  subtitle: string;
+  title: string;
+}): string {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="${escapeXml(title)}">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="${accentA}" />
+          <stop offset="100%" stop-color="${accentB}" />
+        </linearGradient>
+        <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25" />
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="800" rx="64" fill="url(#bg)" />
+      <circle cx="178" cy="138" r="116" fill="#ffffff" fill-opacity="0.12" />
+      <circle cx="1034" cy="160" r="170" fill="#ffffff" fill-opacity="0.08" />
+      <circle cx="998" cy="620" r="120" fill="#000000" fill-opacity="0.12" />
+      <rect x="92" y="104" width="1016" height="592" rx="44" fill="#0b1020" fill-opacity="0.32" stroke="#ffffff" stroke-opacity="0.16" />
+      <rect x="92" y="104" width="1016" height="138" rx="44" fill="url(#glow)" />
+      <text x="136" y="196" fill="#ffffff" fill-opacity="0.92" font-family="Inter, Arial, sans-serif" font-size="34" letter-spacing="0.24em">${escapeXml(initials)}</text>
+      <text x="136" y="258" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="700">${escapeXml(title)}</text>
+      <text x="136" y="320" fill="#ffffff" fill-opacity="0.82" font-family="Inter, Arial, sans-serif" font-size="32">${escapeXml(subtitle)}</text>
+      <g transform="translate(136 392)">
+        <rect width="300" height="22" rx="11" fill="#ffffff" fill-opacity="0.22" />
+        <rect y="42" width="360" height="22" rx="11" fill="#ffffff" fill-opacity="0.18" />
+        <rect y="84" width="252" height="22" rx="11" fill="#ffffff" fill-opacity="0.14" />
+      </g>
+      <g transform="translate(736 332)">
+        <rect width="286" height="212" rx="28" fill="#0b1020" fill-opacity="0.42" stroke="#ffffff" stroke-opacity="0.16" />
+        <text x="34" y="66" fill="#ffffff" fill-opacity="0.72" font-family="SFMono-Regular, Consolas, monospace" font-size="28">project</text>
+        <text x="34" y="118" fill="#ffffff" font-family="SFMono-Regular, Consolas, monospace" font-size="62" font-weight="700">{</text>
+        <text x="102" y="118" fill="#ffffff" fill-opacity="0.9" font-family="SFMono-Regular, Consolas, monospace" font-size="26">{escapeXml(initials)}</text>
+        <text x="34" y="172" fill="#ffffff" font-family="SFMono-Regular, Consolas, monospace" font-size="62" font-weight="700">}</text>
+      </g>
+      <g transform="translate(136 504)">
+        <rect width="160" height="48" rx="24" fill="#ffffff" fill-opacity="0.18" />
+        <rect x="176" width="184" height="48" rx="24" fill="#ffffff" fill-opacity="0.1" />
+        <rect x="376" width="220" height="48" rx="24" fill="#ffffff" fill-opacity="0.14" />
+      </g>
+    </svg>
+  `;
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
 
 type Project = {
   id: string;
   icon: ComponentType<{ className?: string }>;
   iconLabel: string;
   title: string;
+  tagline: string;
   description: string;
   meta: string;
+  stack: string[];
+  liveHref?: string;
+  githubHref: string;
+  highlights: string[];
   imageRatio: number;
   image: string;
   imageAlt: string;
+  modalImages?: Array<{
+    src: string;
+    alt: string;
+  }>;
 };
 
 const PROJECTS: Project[] = [
   {
-    id: "loom",
+    id: "kanbi",
+    icon: KanbanSquare,
+    iconLabel: "Kanbi",
+    title: "Kanbi",
+    tagline: "A fast, keyboard-first kanban for personal projects and small teams.",
+    description:
+      "A super simple kanban-based project tracker for personal projects and small teams. It ships with Next.js 15, tRPC, Drizzle, Better Auth, dnd-kit, Zustand, Tiptap, realtime updates, comments, member invites, and optional AI task drafting.",
+    meta: "Next.js 15 · tRPC · Drizzle · Better Auth",
+    stack: ["Next.js 15", "tRPC v11", "Drizzle ORM", "Better Auth", "Tailwind v4", "dnd-kit", "Tiptap"],
+    githubHref: "https://github.com/rohit317/Kanbi",
+    highlights: [
+      "Boards with drag-and-drop columns and tasks",
+      "Realtime updates, comments, and online presence",
+      "Optional AI task drafting and project invites",
+    ],
+    imageRatio: 1200 / 800,
+    image: createProjectArtwork({
+      accentA: "#0b0b0f",
+      accentB: "#2e3cff",
+      initials: "KB",
+      subtitle: "keyboard-first kanban tracker",
+      title: "Kanbi",
+    }),
+    imageAlt: "Kanbi project tracker artwork",
+    modalImages: [
+      {
+        src: createProjectArtwork({
+          accentA: "#0b0b0f",
+          accentB: "#2e3cff",
+          initials: "KB",
+          subtitle: "keyboard-first kanban tracker",
+          title: "Kanbi",
+        }),
+        alt: "Kanbi board overview",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#101827",
+          accentB: "#4338ca",
+          initials: "FLOW",
+          subtitle: "task planning and progress views",
+          title: "Kanbi",
+        }),
+        alt: "Kanbi task planning view",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#0f172a",
+          accentB: "#2563eb",
+          initials: "TEAM",
+          subtitle: "collaboration, comments, and invites",
+          title: "Kanbi",
+        }),
+        alt: "Kanbi collaboration and invites view",
+      },
+    ],
+  },
+  {
+    id: "askey",
     icon: Sparkles,
-    iconLabel: "LOOM",
-    title:
-      "An AI writing companion that thinks alongside you, allowing you to capture ideas, edits, and drafts in one focused space.",
+    iconLabel: "asꄗ",
+    title: "asꄗ (askey)",
+    tagline: "Graphics to ASCII art converter with offline support and advanced export controls.",
     description:
-      "I designed Loom, a focused writing surface where ideas, edits, and drafts coexist without the chat clutter.",
-    meta: "Design Engineer, 2024",
-    imageRatio: 752 / 497,
-    image:
-      "https://cdn.dribbble.com/userupload/46128964/file/b92b9d268dd928642ca94bd49e32923a.jpg?resize=752x497&vertical=center",
-    imageAlt: "Loom AI writing companion mockup",
+      "A SvelteKit-powered ASCII art converter for static and animated images. It supports offline use, fine-grained tone controls, background color picking, and one-click exports to TXT, SVG, PNG, WebP, GIF, APNG, or JSON.",
+    meta: "SvelteKit 2 · Vite 7 · PWA",
+    stack: ["SvelteKit 2", "Vite 7", "TypeScript", "Custom service worker", "WASM gifski pipeline"],
+    liveHref: "https://askey.vercel.app/",
+    githubHref: "https://github.com/rohit317/askey",
+    highlights: [
+      "Offline-ready PWA with animated input support",
+      "Exports to TXT, SVG, PNG, WebP, GIF, APNG, and JSON",
+      "Tone controls, custom tinting, and live theme switching",
+    ],
+    imageRatio: 1200 / 800,
+    image: createProjectArtwork({
+      accentA: "#141414",
+      accentB: "#b45309",
+      initials: "ASCII",
+      subtitle: "graphics to ASCII converter",
+      title: "asꄗ",
+    }),
+    imageAlt: "askey ASCII art converter artwork",
+    modalImages: [
+      {
+        src: createProjectArtwork({
+          accentA: "#141414",
+          accentB: "#b45309",
+          initials: "ASCII",
+          subtitle: "graphics to ASCII converter",
+          title: "asꄗ",
+        }),
+        alt: "askey converter canvas",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#1f2937",
+          accentB: "#d97706",
+          initials: "GIF",
+          subtitle: "animated frames and export controls",
+          title: "asꄗ",
+        }),
+        alt: "askey animated export controls",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#111827",
+          accentB: "#ea580c",
+          initials: "PWA",
+          subtitle: "offline-ready conversion workflow",
+          title: "asꄗ",
+        }),
+        alt: "askey offline conversion workflow",
+      },
+    ],
   },
   {
-    id: "atlas",
+    id: "pasteez",
     icon: Compass,
-    iconLabel: "Atlas Studio",
-    title: "A two week brand and product sprint for a creative studio.",
+    iconLabel: "Pasteez",
+    title: "Pasteez | Paste Bin",
+    tagline: "A secure paste bin for sharing encrypted code snippets.",
     description:
-      "End to end identity, marketing site, and a small product surface designed to feel quietly confident across every touchpoint.",
-    meta: "Product & Brand Designer, 2025",
-    imageRatio: 1024 / 768,
-    image:
-      "https://cdn.dribbble.com/userupload/24599416/file/original-1ae5075dcd129aebb16bdbca24b41ac7.png?resize=1024x768&vertical=center",
-    imageAlt: "Atlas Studio brand and product sprint mockup",
+      "A paste bin for creating, encrypting, and sharing code snippets. The project includes syntax highlighting, password-protected flows, profile views, and a client/server architecture for pastes and posts.",
+    meta: "React · Express · Redux · AES-256",
+    stack: ["React", "Express", "Redux", "react-simple-code-editor", "highlight.js", "AES-256/Base64 encryption"],
+    liveHref: "https://pasteez.netlify.com/",
+    githubHref: "https://github.com/rohit317/pasteez",
+    highlights: [
+      "Encrypted snippets with syntax highlighting",
+      "Password-protected create and prompt flows",
+      "Profile and post management backed by client/server routes",
+    ],
+    imageRatio: 1200 / 800,
+    image: createProjectArtwork({
+      accentA: "#082032",
+      accentB: "#3b82f6",
+      initials: "</>",
+      subtitle: "encrypted code sharing",
+      title: "Pasteez",
+    }),
+    imageAlt: "Pasteez code sharing artwork",
+    modalImages: [
+      {
+        src: createProjectArtwork({
+          accentA: "#082032",
+          accentB: "#3b82f6",
+          initials: "</>",
+          subtitle: "encrypted code sharing",
+          title: "Pasteez",
+        }),
+        alt: "Pasteez paste editor",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#0c4a6e",
+          accentB: "#1d4ed8",
+          initials: "AES",
+          subtitle: "secure snippet encryption flow",
+          title: "Pasteez",
+        }),
+        alt: "Pasteez encryption flow",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#111827",
+          accentB: "#0284c7",
+          initials: "SHARE",
+          subtitle: "public links and profile pages",
+          title: "Pasteez",
+        }),
+        alt: "Pasteez sharing and profile pages",
+      },
+    ],
   },
   {
-    id: "rhythm",
-    icon: LineChart,
-    iconLabel: "Rhythm",
-    title: "Calm analytics for indie founders.",
-    description:
-      "A weekly digest that turns raw product data into a simple narrative. Built so you can read it on a Sunday with coffee.",
-    meta: "Founder & Designer, 2024",
-    imageRatio: 1024 / 768,
-    image:
-      "https://cdn.dribbble.com/userupload/47357856/file/75841fa59f32f05ca6c5ddf02d08dfe6.png?resize=1024x768&vertical=center",
-    imageAlt: "Rhythm calm analytics mockup",
-  },
-  {
-    id: "groove",
+    id: "clean-n-cut",
     icon: Wand2,
-    iconLabel: "Groove",
-    title:
-      "Reimagining the booking flow for a music school, asisting thousands of students in finding the right lessons.",
+    iconLabel: "Clean & Cut",
+    title: "Clean & Cut",
+    tagline: "A fast AI background remover with a polished single-page flow.",
     description:
-      "I led a redesign of the lesson booking experience, cutting drop off in half and making the schedule feel like a calendar people actually want to open.",
-    meta: "Lead Designer, 2023",
-    imageRatio: 1024 / 768,
-    image:
-      "https://cdn.dribbble.com/userupload/43955214/file/original-d4cde1de803e84b97d8892e3444c04b0.png?resize=1024x768&vertical=center",
-    imageAlt: "Groove music school booking flow mockup",
-  },
-  {
-    id: "fieldnote",
-    icon: Layers,
-    iconLabel: "Fieldnote",
-    title:
-      "A pocket sized research tool for design teams that want to get out of their docs and into the world.",
-    description:
-      "Capture quotes, tag patterns, and synthesize themes in one place. The interface stays out of the way so the thinking can happen.",
-    meta: "Design Engineer, 2024",
-    imageRatio: 1024 / 768,
-    image:
-      "https://cdn.dribbble.com/userupload/30310902/file/original-621e7fe47be9d11ee14544456c693bec.png?resize=1024x768&vertical=center",
-    imageAlt: "Fieldnote pocket sized research tool mockup",
-  },
-  {
-    id: "talkback",
-    icon: Bot,
-    iconLabel: "Talkback",
-    title: "A friendlier interface for talking to language models.",
-    description:
-      "An exploration of how AI chat could feel less like a terminal and more like a conversation with a curious friend.",
-    meta: "Independent Project, 2025",
-    imageRatio: 1024 / 768,
-    image:
-      "https://cdn.dribbble.com/userupload/16560717/file/original-c6f745d50302d66609bfe080f99f5396.png?resize=1024x768&vertical=center",
-    imageAlt: "Talkback friendlier AI chat interface mockup",
+      "A modern React + Vite app for fast AI-powered background removal. It uses drag-and-drop uploads, client-side previews, instant result rendering, one-click downloads, Framer Motion polish, and a Tailwind-based design system.",
+    meta: "React 18 · Vite 5 · Framer Motion",
+    stack: ["React 18", "Vite 5", "TypeScript", "Tailwind CSS", "Framer Motion", "TanStack Query", "Radix UI"],
+    liveHref: "https://cleanncut.com/",
+    githubHref: "https://github.com/rohit317/clean-n-cut",
+    highlights: [
+      "Drag-and-drop uploads with client-side preview",
+      "Instant background removal and one-click download",
+      "Motion-rich single-page UX with custom design tokens",
+    ],
+    imageRatio: 1200 / 800,
+    image: createProjectArtwork({
+      accentA: "#111827",
+      accentB: "#0f766e",
+      initials: "BG",
+      subtitle: "AI background remover",
+      title: "Clean & Cut",
+    }),
+    imageAlt: "Clean and Cut background remover artwork",
+    modalImages: [
+      {
+        src: createProjectArtwork({
+          accentA: "#111827",
+          accentB: "#0f766e",
+          initials: "BG",
+          subtitle: "AI background remover",
+          title: "Clean & Cut",
+        }),
+        alt: "Clean and Cut upload screen",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#0f172a",
+          accentB: "#0d9488",
+          initials: "CUT",
+          subtitle: "instant preview and results",
+          title: "Clean & Cut",
+        }),
+        alt: "Clean and Cut result preview",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#1f2937",
+          accentB: "#14b8a6",
+          initials: "DL",
+          subtitle: "one-click transparent exports",
+          title: "Clean & Cut",
+        }),
+        alt: "Clean and Cut download actions",
+      },
+    ],
   },
 ];
 
@@ -126,6 +353,41 @@ export function Projects({
   viewMoreVisible = false,
 }: ProjectsProps): ReactNode {
   const items = viewMoreVisible ? PROJECTS.slice(0, 4) : PROJECTS;
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedProject(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedProject]);
+
+  useEffect(() => {
+    window.dispatchEvent(
+      new Event(selectedProject ? "portfolio:modal-open" : "portfolio:modal-close"),
+    );
+  }, [selectedProject]);
 
   return (
     <section className="relative w-full">
@@ -144,7 +406,12 @@ export function Projects({
 
         <div className="columns-1 gap-6 md:columns-2 md:gap-7">
           {items.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <ProjectCard
+              key={project.id}
+              index={index}
+              onOpen={setSelectedProject}
+              project={project}
+            />
           ))}
         </div>
 
@@ -163,41 +430,82 @@ export function Projects({
           </div>
         ) : null}
       </div>
+
+      {selectedProject && isMounted
+        ? createPortal(
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />,
+          document.body,
+        )
+        : null}
     </section>
+  );
+}
+
+function ProjectStack({ stack }: { stack: string[] }): ReactNode {
+  return (
+    <div className="space-y-3.5 rounded-[1.5rem] border border-foreground/8 bg-foreground/[0.03] p-4 sm:p-5">
+      <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-foreground/45">
+        Built with
+      </p>
+      <div className="flex flex-wrap gap-2.5">
+        {stack.map((item) => (
+          <span
+            key={item}
+            className="inline-flex items-center rounded-full border border-foreground/10 bg-background/80 px-3 py-1.5 text-[13px] font-medium tracking-tight text-foreground/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]"
+          >
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
 function ProjectCard({
   project,
   index,
+  onOpen,
 }: {
   project: Project;
   index: number;
+  onOpen: (project: Project) => void;
 }): ReactNode {
-  const Icon = project.icon;
   return (
     <FadeIn
       delay={Math.min(index * 0.06, 0.3)}
       className="mb-6 break-inside-avoid md:mb-7"
     >
-
       <TiltedCard
         captionText={project.iconLabel}
         rotateAmplitude={8}
         scaleOnHover={1.05}
         showMobileWarning={false}
-        showTooltip
+        showTooltip={false}
         displayOverlayContent
         overlayContent={
-          <article className="project-card flex cursor-pointer flex-col gap-4 rounded-3xl border border-foreground/8 bg-background p-3 sm:p-3.5">
-            <header className="flex items-center gap-2.5 px-1 pt-2">
+          <article
+            className="project-card flex cursor-pointer flex-col gap-4 rounded-3xl border border-foreground/8 bg-background p-2.5 transition-transform duration-300 hover:-translate-y-1 sm:p-3.5"
+            onClick={() => onOpen(project)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onOpen(project);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+          >
+            {/* <header className="flex items-center gap-2.5 px-1 pt-2">
               <span className="border-foreground/10 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border bg-background">
                 <Icon className="h-3.5 w-3.5 text-foreground" aria-hidden="true" />
               </span>
               <span className="text-sm font-medium tracking-tight text-foreground">
                 {project.iconLabel}
               </span>
-            </header>
+            </header> */}
 
             <div
               className="project-card__image ring-foreground/5 relative w-full overflow-hidden rounded-2xl bg-foreground/5 ring-1"
@@ -219,17 +527,211 @@ function ProjectCard({
               <h3 className="text-[20px] font-medium leading-[1.2] tracking-tight text-foreground sm:text-[22px]">
                 {project.title}
               </h3>
+              <p className="text-[13px] font-medium tracking-tight text-foreground/85">
+                {project.tagline}
+              </p>
               <p className="text-[14px] leading-normal tracking-tight text-foreground/65 sm:text-[15px]">
                 {project.description}
               </p>
             </div>
 
-            <p className="px-1 pb-2 text-[12px] tracking-tight text-foreground/50">
-              {project.meta}
-            </p>
+            <div className="flex items-center justify-between px-1 pb-1">
+              <p className="px-1 pb-2 text-[12px] tracking-tight text-foreground/50">
+                {project.meta}
+              </p>
+
+              <ArrowRight className="h-3.5 w-3.5 text-foreground/50" aria-hidden="true" />
+            </div>
           </article>
         }
       />
     </FadeIn>
+  );
+}
+
+function ProjectModal({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}): ReactNode {
+  const images = project.modalImages?.length
+    ? project.modalImages
+    : [{ src: project.image, alt: project.imageAlt }];
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [project.id]);
+
+  const hasMultipleImages = images.length > 1;
+  const goToPreviousImage = () => {
+    setActiveImageIndex((currentIndex) =>
+      currentIndex === 0 ? images.length - 1 : currentIndex - 1,
+    );
+  };
+  const goToNextImage = () => {
+    setActiveImageIndex((currentIndex) =>
+      currentIndex === images.length - 1 ? 0 : currentIndex + 1,
+    );
+  };
+
+  return (
+    <div
+      aria-modal="true"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto overscroll-contain px-1.5 py-3 sm:items-center sm:px-6 sm:py-6"
+      role="dialog"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          onClose();
+        }
+      }}
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
+      <div className="pointer-events-none absolute inset-0 bg-background/92 backdrop-blur-[24px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_38%),radial-gradient(circle_at_bottom_right,_rgba(99,102,241,0.12),_transparent_35%)] opacity-100" />
+
+      <FadeIn className="relative z-10 w-full max-w-5xl" duration={0.45}>
+        <div className="relative flex max-h-[calc(100dvh-1.5rem)] flex-col overflow-y-auto overscroll-contain rounded-[1.5rem] border border-foreground/10 bg-background shadow-[0_30px_100px_rgba(0,0,0,0.28)] sm:max-h-[calc(100dvh-2rem)] sm:rounded-[2rem]" style={{ WebkitOverflowScrolling: "touch" }}>
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.08),_transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_30%)]" />
+          <div className="sticky top-0 z-20 flex items-start justify-between gap-4 border-b border-foreground/8 bg-background/96 px-3.5 py-4 backdrop-blur-xl sm:px-7 sm:py-5">
+            <div className="min-w-0">
+              <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-foreground/45">
+                Project details
+              </p>
+              <h3 className="mt-2 font-serif text-[2rem] font-medium leading-none tracking-tight text-foreground sm:text-[2.5rem]">
+                {project.title}
+              </h3>
+            </div>
+            <button
+              aria-label="Close project modal"
+              className="focus-ring inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-background text-foreground transition-colors hover:bg-foreground/5"
+              onClick={onClose}
+              type="button"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="relative px-3.5 py-5 sm:px-7 sm:py-7 lg:grid lg:grid-cols-[1.45fr_0.9fr] lg:gap-8">
+            <div className="flex flex-col gap-5 sm:gap-6">
+              <div className="relative overflow-hidden rounded-[1.75rem] border border-foreground/10 bg-foreground/5 ring-1 ring-foreground/5">
+                <div className="relative w-full" style={{ aspectRatio: 1200 / 810 }}>
+                  <Image
+                    alt={images[activeImageIndex]?.alt ?? project.imageAlt}
+                    src={images[activeImageIndex]?.src ?? project.image}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 58vw, 100vw"
+                    className="object-cover"
+                  />
+
+                  {hasMultipleImages ? (
+                    <>
+                      <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/25 bg-black/35 px-2 py-1 backdrop-blur">
+                        <button
+                          aria-label="Show previous project image"
+                          className="focus-ring inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition-colors hover:bg-white/20"
+                          onClick={goToPreviousImage}
+                          type="button"
+                        >
+                          <ChevronLeft className="h-3.5 w-3.5" aria-hidden="true" />
+                        </button>
+
+                        {images.map((image, index) => (
+                          <button
+                            key={image.alt}
+                            aria-label={`Show project image ${index + 1}`}
+                            aria-pressed={index === activeImageIndex}
+                            className={`h-2.5 w-2.5 rounded-full transition ${
+                              index === activeImageIndex
+                                ? "bg-white"
+                                : "bg-white/45 hover:bg-white/70"
+                            }`}
+                            onClick={() => setActiveImageIndex(index)}
+                            type="button"
+                          />
+                        ))}
+
+                        <button
+                          aria-label="Show next project image"
+                          className="focus-ring inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition-colors hover:bg-white/20"
+                          onClick={goToNextImage}
+                          type="button"
+                        >
+                          <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+                        </button>
+                      </div>
+                    </>
+                  ) : null}
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2.5 sm:gap-3">
+                {project.liveHref ? (
+                  <Link
+                    className="focus-ring inline-flex items-center justify-center rounded-xl bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
+                    href={project.liveHref}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    View Live Demo
+                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                  </Link>
+                ) : (
+                  <span className="inline-flex items-center justify-center rounded-xl border border-foreground/10 px-4 py-2.5 text-sm font-medium text-foreground/55">
+                    No live demo listed in the repo
+                  </span>
+                )}
+
+                <Link
+                  className="focus-ring inline-flex items-center justify-center rounded-xl border border-foreground/10 bg-background px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5"
+                  href={project.githubHref}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  View GitHub
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                </Link>
+              </div>
+
+              <div className="hidden lg:block">
+                <ProjectStack stack={project.stack} />
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col gap-5 sm:mt-6 sm:gap-6 lg:mt-0">
+              <div className="space-y-3.5 rounded-[1.5rem] border border-foreground/8 bg-foreground/[0.03] p-4 sm:p-5">
+                <h4 className="text-xl font-medium tracking-tight text-foreground">
+                  {project.tagline}
+                </h4>
+                <p className="text-[15px] leading-7 tracking-tight text-foreground/65">
+                  {project.description}
+                </p>
+              </div>
+
+              <div className="lg:hidden">
+                <ProjectStack stack={project.stack} />
+              </div>
+
+              <div className="space-y-3.5 rounded-[1.5rem] border border-foreground/8 bg-foreground/[0.03] p-4 sm:p-5">
+                <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-foreground/45">
+                  Highlights
+                </p>
+                <ul className="space-y-2.5 text-[14px] leading-6 tracking-tight text-foreground/68">
+                  {project.highlights.map((item) => (
+                    <li className="flex gap-2" key={item}>
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/40" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+    </div>
   );
 }
