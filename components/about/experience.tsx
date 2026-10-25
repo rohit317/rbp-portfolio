@@ -16,7 +16,7 @@ const ENTRIES: Entry[] = [
     company: "Freelance",
     role: "Full Stack Developer",
     period: "Aug 2025 – Present",
-    icon: "/fs-freelance.svg",
+    icon: "/freelance.png",
     brand: "#F59E0B",
   },
   {
