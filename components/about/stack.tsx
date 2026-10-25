@@ -294,11 +294,15 @@ export function Stack(): ReactNode {
 
       const mouse = Mouse.create(container);
 
+      // Matter attaches a non-passive wheel handler that calls
+      // preventDefault, which kills page scrolling over the field.
+      // Detach it (all legacy event names, for good measure).
       const wheelTarget = mouse.element as HTMLElement & {
         mousewheel?: EventListener;
       };
       if (wheelTarget.mousewheel) {
         wheelTarget.removeEventListener("wheel", wheelTarget.mousewheel);
+        wheelTarget.removeEventListener("mousewheel", wheelTarget.mousewheel);
         wheelTarget.removeEventListener(
           "DOMMouseScroll",
           wheelTarget.mousewheel
@@ -388,6 +392,18 @@ export function Stack(): ReactNode {
         cancelAnimationFrame(raf);
         window.removeEventListener("mouseup", releasePointer);
         window.removeEventListener("touchend", releasePointer);
+        // Detach Matter's element listeners; otherwise every re-run of this
+        // effect (category switch, StrictMode remount) leaves another wheel
+        // handler that preventDefaults scrolling over the field.
+        const handlers = mouse as unknown as Record<string, EventListener>;
+        const el = mouse.element;
+        el.removeEventListener("mousemove", handlers.mousemove!);
+        el.removeEventListener("mousedown", handlers.mousedown!);
+        el.removeEventListener("mouseup", handlers.mouseup!);
+        el.removeEventListener("wheel", handlers.mousewheel!);
+        el.removeEventListener("touchmove", handlers.mousemove!);
+        el.removeEventListener("touchstart", handlers.mousedown!);
+        el.removeEventListener("touchend", handlers.mouseup!);
         ro.disconnect();
         Runner.stop(runner);
         World.clear(world, false);
@@ -495,7 +511,7 @@ export function Stack(): ReactNode {
           <div
             ref={containerRef}
             className="absolute inset-0 cursor-grab select-none"
-            style={{ touchAction: "none" }}
+            style={{ touchAction: "pan-y" }}
           >
             {activeChips.map((chip, i) => (
               <div
