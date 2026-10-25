@@ -13,18 +13,10 @@ type Entry = {
 
 const ENTRIES: Entry[] = [
   {
-    company: "Horizon Labs",
-    role: "Full Stack Developer (Part Time)",
-    period: "Jan 2026 – Present",
-    icon: "/horizon.jpeg",
-    brand: "#0AE448",
-  },
-  {
-    company: "Concentrix",
-    role: "Technical Advisor",
+    company: "Freelancing",
+    role: "Full Stack Developer",
     period: "Aug 2025 – Present",
-    icon: "/concentrix.jpeg",
-    brand: "#5E6AD2",
+    brand: "#F59E0B",
   },
   {
     company: "Accenture",
