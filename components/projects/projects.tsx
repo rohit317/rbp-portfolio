@@ -138,12 +138,16 @@ const PROJECTS: Project[] = [
         alt: "Kanbi landing page",
       },
       {
-        src: "/projects/kanbi-signup.png",
-        alt: "Kanbi account creation",
+        src: "/projects/kanbi-dashboard.png",
+        alt: "Kanbi dashboard with assigned tasks and projects",
       },
       {
-        src: "/projects/kanbi-login.png",
-        alt: "Kanbi sign-in",
+        src: "/projects/kanbi-board.png",
+        alt: "Kanbi board with drag-and-drop columns, priorities, and filters",
+      },
+      {
+        src: "/projects/kanbi-task.png",
+        alt: "Kanbi task detail with status, checklist, comments, and activity",
       },
     ],
   },
