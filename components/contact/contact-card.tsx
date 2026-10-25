@@ -27,20 +27,21 @@ export function ContactCard(): ReactNode {
               <ShaderFlow scale={5} brightness={3}/>
             </div>
 
-            <div className="relative grid gap-8 p-5 sm:gap-10 sm:p-7 md:grid-cols-[1.2fr_1fr] md:items-stretch md:gap-6 md:p-6">
-              <div className="flex flex-col gap-5">
-                <h2 className="font-serif text-[2.25rem] font-medium leading-[1.05] tracking-tight text-balance text-foreground sm:text-[2.75rem] lg:text-[3.25rem]">
-                  Let&rsquo;s connect
-                </h2>
-                <p className="max-w-[29ch] text-[18px] leading-[1.4] tracking-tight text-foreground/65 sm:text-[22px] mb-6">
-                  I&rsquo;m always open to discussing new projects, creative
-                  ideas, or opportunities to be part of your visions. Just reach out!
-                </p>
+            <div className="relative flex flex-col items-center px-5 py-14 text-center sm:px-8 sm:py-20">
+              <h2 className="font-serif text-[2.5rem] font-medium leading-[1.05] tracking-tight text-balance text-foreground sm:text-[3.25rem]">
+                Let&rsquo;s connect
+              </h2>
+              <p className="mt-5 max-w-[46ch] text-[17px] leading-[1.6] tracking-tight text-foreground/65 sm:text-[19px]">
+                I&rsquo;m always open to discussing new projects, creative
+                ideas, or opportunities to be part of your visions. Just reach out!
+              </p>
+              <div className="mt-9 flex justify-center">
                 <ContactCardCtas />
               </div>
 
-              <div className="border-foreground/8 flex flex-col items-center justify-center gap-6 rounded-[1.1rem] border bg-background p-5 sm:p-8">
-                <div className="flex items-center gap-3 opacity-75">
+              <div className="mt-12 flex flex-col items-center gap-5">
+                <span aria-hidden="true" className="h-px w-14 bg-foreground/15" />
+                <div className="flex items-center gap-3">
                   <SocialIcon
                     href="mailto:rohit.totlani.317@gmail.com"
                     label="Email"
@@ -52,11 +53,9 @@ export function ContactCard(): ReactNode {
                     imageSrc="/linkedin.svg"
                   />
                 </div>
-                <div className="flex flex-col items-center gap-1 text-center">
-                  <p className="text-[13px] tracking-tight text-foreground/70">
-                    2026 &copy; Built with Next.js
-                  </p>
-                </div>
+                <p className="text-[12.5px] tracking-tight text-foreground/45">
+                  2026 &copy; Built with Next.js
+                </p>
               </div>
             </div>
           </div>

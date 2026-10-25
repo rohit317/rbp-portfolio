@@ -72,7 +72,7 @@ function PolaroidCard({
         y: ty,
         rotate: photo.rotate,
       }}
-      className="relative aspect-[3/4] w-[clamp(6rem,11vw,9rem)] shrink-0 overflow-hidden rounded-2xl border-6 border-neutral-300/40 bg-white p-1.5 dark:border-white/15 dark:bg-neutral-900"
+      className="relative aspect-[3/4] w-[clamp(7rem,13vw,11rem)] shrink-0 overflow-hidden rounded-2xl border-6 border-neutral-300/40 bg-white p-1.5 dark:border-white/15 dark:bg-neutral-900"
     >
       <DottedPattern className="relative h-full w-full overflow-hidden rounded-xl" />
     </motion.div>
@@ -87,7 +87,7 @@ export function PolaroidStrip(): ReactNode {
   );
 
   if (!mounted) {
-    return <div aria-hidden="true" className="h-[clamp(8rem,15vw,12rem)] w-full" />;
+    return <div aria-hidden="true" className="h-[clamp(9.5rem,17.5vw,14.75rem)] w-full" />;
   }
 
   return (

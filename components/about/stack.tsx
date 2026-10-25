@@ -425,7 +425,7 @@ export function Stack(): ReactNode {
           </button>
         </div>
 
-        <div className="flex flex-nowrap gap-1 overflow-x-auto rounded-full bg-foreground/3 p-[5px] hide-scrollbar">
+        <div className="flex w-fit max-w-full flex-nowrap gap-1 overflow-x-auto rounded-full bg-foreground/3 p-[5px] hide-scrollbar">
           {CATEGORIES.map((category) => {
             const active = category.key === activeCategory;
             return (

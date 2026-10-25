@@ -582,7 +582,7 @@ function ProjectModal({
                   <div className="flex flex-wrap gap-2.5 sm:gap-3">
                     {project.liveHref ? (
                       <Link
-                        className="focus-ring inline-flex items-center justify-center rounded-xl bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
+                        className="focus-ring inline-flex items-center justify-center rounded-[1.5rem] bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
                         href={project.liveHref}
                         rel="noreferrer"
                         target="_blank"
@@ -591,13 +591,13 @@ function ProjectModal({
                         <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                       </Link>
                     ) : (
-                      <span className="inline-flex items-center justify-center rounded-xl border border-foreground/10 px-4 py-2.5 text-sm font-medium text-foreground/55">
+                      <span className="inline-flex items-center justify-center rounded-[1.5rem] border border-foreground/10 px-4 py-2.5 text-sm font-medium text-foreground/55">
                         No live demo listed in the repo
                       </span>
                     )}
 
                     <Link
-                      className="focus-ring inline-flex items-center justify-center rounded-xl border border-foreground/10 bg-background px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5"
+                      className="focus-ring inline-flex items-center justify-center rounded-[1.5rem] border border-foreground/10 bg-background px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5"
                       href={project.githubHref}
                       rel="noreferrer"
                       target="_blank"
