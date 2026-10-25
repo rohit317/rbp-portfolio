@@ -3,7 +3,9 @@
 import { RotateCcw } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import LiquidEther from "../ui/liquid-ether";
+import dynamic from "next/dynamic";
+
+const LiquidEther = dynamic(() => import("../ui/liquid-ether"), { ssr: false });
 
 type Chip = {
   label: string;
@@ -148,6 +150,25 @@ export function Stack(): ReactNode {
   const measureRef = useRef<HTMLDivElement | null>(null);
   const chipRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [resetKey, setResetKey] = useState(0);
+
+  const fieldRef = useRef<HTMLDivElement | null>(null);
+  const [fieldInView, setFieldInView] = useState(false);
+
+  useEffect(() => {
+    const el = fieldRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setFieldInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "400px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
   const [activeCategory, setActiveCategory] = useState("all");
   const [hasEnteredView, setHasEnteredView] = useState(false);
 
@@ -385,7 +406,7 @@ export function Stack(): ReactNode {
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h3 className="text-foreground text-[15px] font-semibold tracking-tight">
+            <h3 className="font-serif text-[20.5px] font-medium leading-[1.2] tracking-[-0.01em] text-foreground">
               What I do
             </h3>
             <div className="mt-2 flex flex-wrap items-center gap-3">
@@ -404,7 +425,7 @@ export function Stack(): ReactNode {
           </button>
         </div>
 
-        <div className="flex flex-nowrap gap-2 overflow-x-auto rounded-3xl border border-foreground/10 bg-background/80 p-1 shadow-sm hide-scrollbar">
+        <div className="flex flex-nowrap gap-1 overflow-x-auto rounded-full bg-foreground/3 p-[5px] hide-scrollbar">
           {CATEGORIES.map((category) => {
             const active = category.key === activeCategory;
             return (
@@ -415,9 +436,9 @@ export function Stack(): ReactNode {
                   setActiveCategory(category.key);
                   setResetKey((k) => k + 1);
                 }}
-                className={`flex-shrink-0 rounded-3xl px-3 py-2 text-sm font-medium transition ${active
-                  ? "bg-foreground text-background shadow-sm"
-                  : "text-foreground/70 hover:text-foreground"
+                className={`focus-ring flex-shrink-0 rounded-full px-4 py-2 text-[13.5px] font-medium transition ${active
+                  ? "bg-foreground text-background"
+                  : "text-foreground/70 hover:bg-foreground/6 hover:text-foreground"
                   }`}
               >
                 {category.label}
@@ -439,8 +460,8 @@ export function Stack(): ReactNode {
           className="absolute inset-0 h-full w-full opacity-100 rotate-180"
         /> */}
 
-        <div style={{ width: '100%', height: 600, position: 'relative' }}>
-          {resolvedTheme !== 'light' ? (
+        <div ref={fieldRef} style={{ width: '100%', height: 600, position: 'relative' }}>
+          {fieldInView && resolvedTheme !== 'light' ? (
             <LiquidEther
               colors={['#5227FF', '#FF9FFC', '#B497CF']}
               mouseForce={20}

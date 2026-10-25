@@ -1,3 +1,4 @@
+import { useTheme } from 'next-themes';
 import { useRef, useCallback, useState, useEffect, type ReactNode } from 'react';
 
 interface BorderGlowProps {
@@ -94,6 +95,13 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
   colors = ['#c084fc', '#f472b6', '#38bdf8'],
   fillOpacity = 0.75,
 }) => {
+  const { resolvedTheme } = useTheme();
+  const effectiveGlowColor =
+    resolvedTheme === 'light' ? '228 18 32' : glowColor;
+  const effectiveColors =
+    resolvedTheme === 'light'
+      ? ['#64748b', '#475569', '#334155']
+      : colors;
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [cursorAngle, setCursorAngle] = useState(45);
@@ -193,7 +201,7 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
     ? Math.max(0, (edgeProximity * 100 - edgeSensitivity) / (100 - edgeSensitivity))
     : 0;
 
-  const meshGradients = buildMeshGradients(colors);
+  const meshGradients = buildMeshGradients(effectiveColors);
   const borderBg = meshGradients.map(g => `${g} border-box`);
   const fillBg = meshGradients.map(g => `${g} padding-box`);
   const angleDeg = `${cursorAngle.toFixed(3)}deg`;
@@ -276,7 +284,7 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
           className="absolute rounded-[inherit]"
           style={{
             inset: `${glowRadius}px`,
-            boxShadow: buildBoxShadow(glowColor, glowIntensity),
+            boxShadow: buildBoxShadow(effectiveGlowColor, glowIntensity),
             mixBlendMode: 'screen',
             opacity: 0.95,
           }}

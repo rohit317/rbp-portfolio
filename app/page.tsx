@@ -31,11 +31,11 @@ export default function HomePage(): ReactNode {
       <section className="mx-auto w-full max-w-160 px-3.5 pt-8 pb-0 sm:px-10 sm:pt-0 sm:pb-0">
         <SpotlightCard className="w-full p-0">
           <FadeIn delay={0.5} triggerOnce amount={0.25}>
-            <div className="rounded-4xl border border-foreground/5 bg-foreground/1.5 px-8 py-6 sm:px-12 sm:py-10 dark:bg-foreground/3">
-              <h1 className="font-serif text-[1.75rem] font-medium tracking-tight text-foreground sm:text-[2rem]">
+            <div className="rounded-4xl border border-foreground/5 bg-foreground/1.5 px-12 py-10 sm:px-[52px] sm:py-[44px] dark:bg-foreground/3">
+              <h1 className="font-serif text-[clamp(1.9rem,1.5rem_+_1.5vw,2.4rem)] font-medium leading-[1.1] tracking-[-0.02em] text-balance text-foreground">
                 Hello! I&rsquo;m <span className="border-b border-foreground/30 pb-0.5">Rohit Totlani</span>.
               </h1>
-              <div className="mt-8 space-y-6 text-[17px] leading-[1.7] tracking-tight text-foreground/75 sm:text-[18px]">
+              <div className="mt-7 grid gap-5 text-[17px] leading-[1.7] tracking-[-0.005em] text-pretty text-foreground/75">
                 <p>
                   I build full-stack products that pair polished frontend experiences with reliable backend architecture, cloud-native infrastructure, and AI-enhanced workflows.
                 </p>

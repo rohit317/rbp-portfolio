@@ -2,7 +2,6 @@ import { Nav } from "@/components/layout/nav";
 import { PageBackdrop } from "@/components/layout/page-backdrop";
 import { Providers } from "@/components/layout/providers";
 import { SkipToContent } from "@/components/layout/skip-to-content";
-import Particles from "@/components/ui/particles";
 import { baseMetadata } from "@/lib/metadata";
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist, Geist_Mono } from "next/font/google";
@@ -46,10 +45,12 @@ export default function RootLayout({
   children: ReactNode;
 }>): ReactNode {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} min-h-screen bg-background font-sans text-foreground antialiased overflow-x-hidden`}
-      >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable}`}
+    >
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased overflow-x-hidden">
         <Providers>
           <div className="site-frame site-frame--top" aria-hidden="true" />
           <div className="site-frame site-frame--left" aria-hidden="true" />
@@ -61,20 +62,6 @@ export default function RootLayout({
             <path d="M5.50871e-06 0C-0.00788227 37.3001 8.99616 50.0116 50 50H5.50871e-06V0Z" fill="currentColor" />
           </svg>
           <SkipToContent />
-          <div className="hidden md:block">
-            <Particles
-              particleCount={320}
-              particleSpread={14}
-              speed={0.08}
-              particleColors={["#f8fafc", "#e5e7eb", "#cbd5e1"]}
-              moveParticlesOnHover={true}
-              alphaParticles={true}
-              particleBaseSize={90}
-              sizeRandomness={0.9}
-              cameraDistance={12}
-              className="opacity-80"
-            />
-          </div>
           <PageBackdrop />
           <Nav />
           {children}

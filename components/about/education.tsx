@@ -31,37 +31,36 @@ const ENTRIES: Entry[] = [
   },
 ];
 
-const ROW_HEIGHT = 64;
-
 export function Education(): ReactNode {
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="text-foreground text-[15px] font-semibold tracking-tight">
+      <h3 className="font-serif text-[20.5px] font-medium leading-[1.2] tracking-[-0.01em] text-foreground">
         Education
       </h3>
       <BorderGlow className="w-full p-0" backgroundColor="var(--background)" animated animateOnInView>
-        <div className="bg-foreground/2 dark:bg-foreground/5 relative overflow-hidden rounded-3xl p-2 sm:p-4">
-          <ul className="flex flex-col gap-2">
-            {ENTRIES.map((entry) => (
-              <li
-                key={`${entry.school}-${entry.period}`}
-                className="bg-background border-foreground/5 flex items-center gap-4 rounded-3xl border p-2"
-                style={{ minHeight: ROW_HEIGHT }}
-              >
-                <SchoolLogo entry={entry} />
-                <div className="flex min-w-0 flex-col">
-                  <span className="text-foreground text-[17px] font-semibold tracking-tight sm:text-[18px]">
-                    {entry.school}
+          <div className="bg-foreground/2 dark:bg-foreground/5 relative overflow-hidden rounded-3xl p-3.5 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.05)] dark:shadow-none">
+            <ul className="flex flex-col gap-2">
+              {ENTRIES.map((entry) => (
+                <li
+                  key={`${entry.school}-${entry.period}`}
+                  className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 rounded-[18px] bg-foreground/3 py-3 pr-3.5 pl-2"
+                >
+                  <SchoolLogo entry={entry} />
+                  <div className="flex min-w-0 flex-col">
+                    <span className="text-foreground text-[17px] font-semibold tracking-tight sm:text-[18px]">
+                      {entry.school}
+                    </span>
+                    <span className="text-foreground/65 mt-0.5 text-[14px] tracking-tight sm:text-[14px]">
+                      {entry.degree}
+                    </span>
+                  </div>
+                  <span className="text-foreground/55 text-[13px] tracking-[-0.01em] whitespace-nowrap tabular-nums">
+                    {entry.period}
                   </span>
-                  <span className="text-foreground/65 mt-0.5 text-[14px] tracking-tight sm:text-[14px]">
-                    {entry.degree}
-                    <span className="text-foreground/30 mx-2">•</span>
-                    <span className="text-foreground/55">{entry.period}</span>
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+
         </div>
       </BorderGlow>
     </div >

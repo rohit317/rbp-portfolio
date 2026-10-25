@@ -10,9 +10,6 @@
   --border: #e5e5e5;
   --ring: #0066ff;
   --frame: #ffffff;
-  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
 }
 
 .dark {
@@ -32,9 +29,9 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-ring: var(--ring);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-fraunces);
 }
 
 html {
@@ -227,4 +224,53 @@ html[data-theme-anim="1"]::view-transition-new(root) {
 
 .project-card:hover .project-card__image-inner {
   transform: scale(1.06);
+}
+
+.project-card svg {
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-card:hover svg {
+  transform: translateX(4px);
+}
+
+/* Project detail modal — flat modern styling */
+.project-modal div[class*="rounded-[1.5rem]"] {
+  border: none;
+  background: color-mix(in srgb, var(--foreground) 4%, transparent);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.project-modal div[class*="rounded-[1.75rem]"] {
+  border: none;
+  box-shadow: none;
+}
+
+.project-modal h4 {
+  font-family: var(--font-serif);
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+}
+
+.project-modal p[class*="uppercase"] {
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.project-modal a[class*="rounded-xl"],
+.project-modal span[class*="rounded-xl"] {
+  border-radius: 9999px;
+  padding: 10px 20px;
+}
+
+.project-modal span[class*="rounded-full"] {
+  border: none;
+  background: color-mix(in srgb, var(--foreground) 6%, transparent);
+  box-shadow: none;
 }
