@@ -5,8 +5,8 @@ import { FadeIn, ScaleUnblur } from "@/components/ui/motion-primitives";
 import { PortraitMorph } from "./portrait-morph";
 import TextType from "../ui/text-type";
 
-const PORTRAIT_SRC = "/josh.webp";
-const PORTRAIT_HOVER_SRC = "/josh_wave.webp";
+const PORTRAIT_SRC = "/rohit-linkedin.jpg";
+const PORTRAIT_HOVER_SRC = "/rohit-linkedin.jpg";
 
 export function Hero(): ReactNode {
   return (
@@ -50,7 +50,7 @@ export function Hero(): ReactNode {
                   <PortraitMorph
                     srcA={PORTRAIT_SRC}
                     srcB={PORTRAIT_HOVER_SRC}
-                    alt="Josh portrait"
+                    alt="Rohit Totlani portrait"
                   />
                 </div>
               </div>

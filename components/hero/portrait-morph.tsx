@@ -105,7 +105,11 @@ void main() {
   vec4 texA = texture2D(uTexA, baseUvA);
   vec4 texB = texture2D(uTexB, baseUvB);
 
-  vec4 color = mix(texA, texB, mask);
+  // rest state is grayscale; the hover wave reveals the color photo
+  float lum = dot(texA.rgb, vec3(0.299, 0.587, 0.114));
+  vec4 grayA = vec4(vec3(lum), texA.a);
+
+  vec4 color = mix(grayA, texB, mask);
 
   float darken = edgeBand * 0.35 * bell;
   color.rgb *= 1.0 - darken;
@@ -307,14 +311,14 @@ export function PortraitMorph({
       role="img"
       aria-label={alt}
       className={className}
-      style={{ position: "relative", width: "100%", height: "100%", filter: "grayscale(100%)" }}
+      style={{ position: "relative", width: "100%", height: "100%" }}
     >
       {!ready ? (
         <img
           src={srcA}
           alt={alt}
           draggable={false}
-          className="absolute inset-0 h-full w-full select-none object-cover"
+          className="absolute inset-0 h-full w-full select-none object-cover grayscale"
         />
       ) : null}
     </div>
