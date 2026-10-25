@@ -3,7 +3,6 @@
 import {
   Bot,
   Boxes,
-  Component,
   Plug,
   RotateCcw,
   Rocket,
@@ -51,6 +50,7 @@ const CATEGORIES: Category[] = [
       { label: "shadcn/ui", slug: "shadcnui", bg: "#5b54ff", fg: "#ffffff" },
       { label: "Framer Motion", slug: "framer", bg: "#0a84ff", fg: "#ffffff" },
       { label: "GSAP", iconUrl: "https://cdn.simpleicons.org/gsap/0a0a0a", bg: "#0AE448", fg: "#0a0a0a" },
+      { label: "Figma", slug: "figma", bg: "#1f1f1f", fg: "#ffffff", iconUrl: "https://svgl.app/library/figma.svg" },
       { label: "Node.js", slug: "nodedotjs", bg: "#3C873A", fg: "#ffffff" },
       { label: "Express", slug: "express", bg: "#000000", fg: "#ffffff" },
       { label: "NestJS", slug: "nestjs", bg: "#E0234E", fg: "#ffffff" },
@@ -86,15 +86,6 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    key: "design",
-    label: "Design",
-    description: "Systematic visual design, prototyping, and accessible UI foundations.",
-    chips: [
-      { label: "Figma", slug: "figma", bg: "#1f1f1f", fg: "#ffffff", iconUrl: "https://svgl.app/library/figma.svg" },
-      { label: "Design Systems", icon: Component, bg: "#8B5CF6", fg: "#ffffff" },
-    ],
-  },
-  {
     key: "frontend",
     label: "Frontend",
     description: "Component-driven interfaces, responsive systems, and motion-rich UIs.",
@@ -109,6 +100,7 @@ const CATEGORIES: Category[] = [
       { label: "shadcn/ui", slug: "shadcnui", bg: "#5b54ff", fg: "#ffffff" },
       { label: "Framer Motion", slug: "framer", bg: "#0a84ff", fg: "#ffffff" },
       { label: "GSAP", iconUrl: "https://cdn.simpleicons.org/gsap/0a0a0a", bg: "#0AE448", fg: "#0a0a0a" },
+      { label: "Figma", slug: "figma", bg: "#1f1f1f", fg: "#ffffff", iconUrl: "https://svgl.app/library/figma.svg" },
     ],
   },
   {
@@ -127,6 +119,8 @@ const CATEGORIES: Category[] = [
       { label: "Redis", slug: "redis", bg: "#D82C20", fg: "#ffffff" },
       { label: "GraphQL", slug: "graphql", bg: "#E10098", fg: "#ffffff" },
       { label: "MySQL", slug: "mysql", bg: "#4479A1", fg: "#ffffff" },
+      { label: "Jest", slug: "jest", bg: "#C21325", fg: "#ffffff" },
+      { label: "Cypress", slug: "cypress", bg: "#17202C", fg: "#ffffff" },
     ],
   },
   {
@@ -143,15 +137,6 @@ const CATEGORIES: Category[] = [
       { label: "GitHub Actions", slug: "githubactions", bg: "#222222", fg: "#ffffff" },
       { label: "CI/CD", icon: Rocket, bg: "#0F172A", fg: "#ffffff" },
       { label: "Render", slug: "render", bg: "#0F172A", fg: "#ffffff" },
-    ],
-  },
-  {
-    key: "testing",
-    label: "Testing",
-    description: "Automated testing and quality gates across frontend and backend.",
-    chips: [
-      { label: "Jest", slug: "jest", bg: "#C21325", fg: "#ffffff" },
-      { label: "Cypress", slug: "cypress", bg: "#17202C", fg: "#ffffff" },
     ],
   },
   {
