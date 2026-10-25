@@ -5,7 +5,7 @@ import { FadeIn, ScaleUnblur } from "@/components/ui/motion-primitives";
 import { PortraitMorph } from "./portrait-morph";
 import TextType from "../ui/text-type";
 
-const PORTRAIT_SRC = "/rohit-cartoon.jpg";
+const PORTRAIT_SRC = "/rohit-linkedin.jpg";
 const PORTRAIT_HOVER_SRC = "/rohit-linkedin.jpg";
 
 export function Hero(): ReactNode {
