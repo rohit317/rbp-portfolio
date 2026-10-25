@@ -13,9 +13,10 @@ type Entry = {
 
 const ENTRIES: Entry[] = [
   {
-    company: "Freelancing",
+    company: "Freelance",
     role: "Full Stack Developer",
     period: "Aug 2025 – Present",
+    icon: "/fs-freelance.svg",
     brand: "#F59E0B",
   },
   {
