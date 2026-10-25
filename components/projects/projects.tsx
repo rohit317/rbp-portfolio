@@ -4,8 +4,10 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
+  Code2,
   Compass,
   KanbanSquare,
+  PlaneTakeoff,
   Sparkles,
   Wand2,
   X,
@@ -70,7 +72,7 @@ function createProjectArtwork({
         <rect width="286" height="212" rx="28" fill="#0b1020" fill-opacity="0.42" stroke="#ffffff" stroke-opacity="0.16" />
         <text x="34" y="66" fill="#ffffff" fill-opacity="0.72" font-family="SFMono-Regular, Consolas, monospace" font-size="28">project</text>
         <text x="34" y="118" fill="#ffffff" font-family="SFMono-Regular, Consolas, monospace" font-size="62" font-weight="700">{</text>
-        <text x="102" y="118" fill="#ffffff" fill-opacity="0.9" font-family="SFMono-Regular, Consolas, monospace" font-size="26">{escapeXml(initials)}</text>
+        <text x="102" y="118" fill="#ffffff" fill-opacity="0.9" font-family="SFMono-Regular, Consolas, monospace" font-size="26">${escapeXml(initials)}</text>
         <text x="34" y="172" fill="#ffffff" font-family="SFMono-Regular, Consolas, monospace" font-size="62" font-weight="700">}</text>
       </g>
       <g transform="translate(136 504)">
@@ -107,15 +109,134 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
+    id: "applypilot",
+    icon: PlaneTakeoff,
+    iconLabel: "ApplyPilot",
+    title: "ApplyPilot",
+    tagline: "An agentic job-application copilot that scores jobs and drafts tailored materials.",
+    description:
+      "Upload a resume, discover matching roles on public boards, and get retrieval-grounded tailored resumes — with a human approval gate before anything is produced.",
+    meta: "LangGraph · FastAPI · LlamaIndex · pgvector",
+    stack: ["LangGraph", "LangChain", "LlamaIndex", "PostgreSQL + pgvector", "FastAPI", "Langfuse", "Next.js 16"],
+    liveHref: "https://apply-pilot-rho-ten.vercel.app/",
+    githubHref: "https://github.com/rohit317/Apply-Pilot",
+    highlights: [
+      "Resume-driven job discovery across free public boards (Remotive, Jobicy, Greenhouse)",
+      "Weighted fitness rubric with hard-requirement gating and per-factor evidence",
+      "Human approval gate before any tailored PDF/DOCX resume is produced",
+    ],
+    imageRatio: 1200 / 800,
+    image: createProjectArtwork({
+      accentA: "#0f0a1e",
+      accentB: "#7c3aed",
+      initials: "AP",
+      subtitle: "agentic job-application copilot",
+      title: "ApplyPilot",
+    }),
+    imageAlt: "ApplyPilot job application copilot artwork",
+    modalImages: [
+      {
+        src: createProjectArtwork({
+          accentA: "#0f0a1e",
+          accentB: "#7c3aed",
+          initials: "AP",
+          subtitle: "agentic job-application copilot",
+          title: "ApplyPilot",
+        }),
+        alt: "ApplyPilot discovery and tailoring overview",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#1e1b4b",
+          accentB: "#6d28d9",
+          initials: "RUBRIC",
+          subtitle: "weighted fitness scoring with evidence",
+          title: "ApplyPilot",
+        }),
+        alt: "ApplyPilot fitness scoring view",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#17103a",
+          accentB: "#8b5cf6",
+          initials: "GATE",
+          subtitle: "human review and tailored exports",
+          title: "ApplyPilot",
+        }),
+        alt: "ApplyPilot human review gate",
+      },
+    ],
+  },
+  {
+    id: "codeforge",
+    icon: Code2,
+    iconLabel: "CodeForge",
+    title: "CodeForge",
+    tagline: "A real-time coding platform with a judge, collaborative rooms, and a system-design game.",
+    description:
+      "Solve LeetCode-style problems with multi-language judging, pair-program in real-time collaborative rooms, and learn systems by building them on a simulated architecture canvas.",
+    meta: "Next.js 16 · tRPC v11 · Drizzle · Y.js",
+    stack: ["Next.js 16", "React 19", "tRPC v11", "Drizzle ORM", "Better Auth", "Y.js + Hocuspocus", "React Flow", "CodeMirror 6"],
+    liveHref: "https://code-forge-web-nine.vercel.app/",
+    githubHref: "https://github.com/rohit317/CodeForge",
+    highlights: [
+      "LeetCode-style judge with multi-language submissions (Python, JS, Java, C++)",
+      "Real-time collaborative coding rooms on Y.js CRDTs with roles, chat, and snapshots",
+      "System-design puzzle game with traffic simulation and calibrated three-star scoring",
+    ],
+    imageRatio: 1200 / 800,
+    image: createProjectArtwork({
+      accentA: "#07160f",
+      accentB: "#059669",
+      initials: "CF",
+      subtitle: "real-time coding platform",
+      title: "CodeForge",
+    }),
+    imageAlt: "CodeForge coding platform artwork",
+    modalImages: [
+      {
+        src: createProjectArtwork({
+          accentA: "#07160f",
+          accentB: "#059669",
+          initials: "CF",
+          subtitle: "real-time coding platform",
+          title: "CodeForge",
+        }),
+        alt: "CodeForge platform overview",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#0f1f14",
+          accentB: "#10b981",
+          initials: "SYNC",
+          subtitle: "real-time collaborative coding rooms",
+          title: "CodeForge",
+        }),
+        alt: "CodeForge collaborative rooms view",
+      },
+      {
+        src: createProjectArtwork({
+          accentA: "#064e3b",
+          accentB: "#34d399",
+          initials: "ARCH",
+          subtitle: "build and simulate system designs",
+          title: "CodeForge",
+        }),
+        alt: "CodeForge system design simulation",
+      },
+    ],
+  },
+  {
     id: "kanbi",
     icon: KanbanSquare,
     iconLabel: "Kanbi",
     title: "Kanbi",
     tagline: "A fast, keyboard-first kanban for personal projects and small teams.",
     description:
-      "A super simple kanban-based project tracker for personal projects and small teams. It ships with Next.js 15, tRPC, Drizzle, Better Auth, dnd-kit, Zustand, Tiptap, realtime updates, comments, member invites, and optional AI task drafting.",
+      "A simple kanban project tracker for personal projects and small teams, with realtime updates, comments, and optional AI task drafting.",
     meta: "Next.js 15 · tRPC · Drizzle · Better Auth",
     stack: ["Next.js 15", "tRPC v11", "Drizzle ORM", "Better Auth", "Tailwind v4", "dnd-kit", "Tiptap"],
+    liveHref: "https://kanbi-web.vercel.app/",
     githubHref: "https://github.com/rohit317/Kanbi",
     highlights: [
       "Boards with drag-and-drop columns and tasks",
@@ -171,7 +292,7 @@ const PROJECTS: Project[] = [
     title: "asꄗ (askey)",
     tagline: "Graphics to ASCII art converter with offline support and advanced export controls.",
     description:
-      "A SvelteKit-powered ASCII art converter for static and animated images. It supports offline use, fine-grained tone controls, background color picking, and one-click exports to TXT, SVG, PNG, WebP, GIF, APNG, or JSON.",
+      "A SvelteKit ASCII art converter for static and animated images, with offline use, tone controls, and one-click exports.",
     meta: "SvelteKit 2 · Vite 7 · PWA",
     stack: ["SvelteKit 2", "Vite 7", "TypeScript", "Custom service worker", "WASM gifski pipeline"],
     liveHref: "https://askey.vercel.app/",
@@ -230,7 +351,7 @@ const PROJECTS: Project[] = [
     title: "Pasteez | Paste Bin",
     tagline: "A secure paste bin for sharing encrypted code snippets.",
     description:
-      "A paste bin for creating, encrypting, and sharing code snippets. The project includes syntax highlighting, password-protected flows, profile views, and a client/server architecture for pastes and posts.",
+      "A paste bin for creating, encrypting, and sharing code snippets, with syntax highlighting and password-protected pastes.",
     meta: "React · Express · Redux · AES-256",
     stack: ["React", "Express", "Redux", "react-simple-code-editor", "highlight.js", "AES-256/Base64 encryption"],
     liveHref: "https://pasteez.netlify.com/",
@@ -289,7 +410,7 @@ const PROJECTS: Project[] = [
     title: "Clean & Cut",
     tagline: "A fast AI background remover with a polished single-page flow.",
     description:
-      "A modern React + Vite app for fast AI-powered background removal. It uses drag-and-drop uploads, client-side previews, instant result rendering, one-click downloads, Framer Motion polish, and a Tailwind-based design system.",
+      "A React + Vite app for fast AI background removal, with drag-and-drop uploads, instant previews, and one-click downloads.",
     meta: "React 18 · Vite 5 · Framer Motion",
     stack: ["React 18", "Vite 5", "TypeScript", "Tailwind CSS", "Framer Motion", "TanStack Query", "Radix UI"],
     liveHref: "https://cleanncut.com/",
@@ -394,7 +515,7 @@ export function Projects({
       <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
         {withHeadline ? (
           <FadeIn className="flex flex-col items-center gap-5 pt-12 pb-10 text-center sm:pt-20 sm:pb-14">
-            <h2 className="font-serif text-[2.5rem] font-medium leading-[1.05] tracking-tight text-foreground md:text-[3rem] lg:text-[3.5rem]">
+            <h2 className="font-serif text-[2.5rem] font-medium leading-[1.05] tracking-tight text-balance text-foreground md:text-[3rem] lg:text-[3.5rem]">
               My projects
             </h2>
             <p className="max-w-[33ch] text-[18px] leading-[1.45] tracking-tight text-foreground/65 sm:text-[20px]">
@@ -404,15 +525,31 @@ export function Projects({
           </FadeIn>
         ) : null}
 
-        <div className="columns-1 gap-6 md:columns-2 md:gap-7">
-          {items.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              index={index}
-              onOpen={setSelectedProject}
-              project={project}
-            />
-          ))}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start md:gap-7">
+          <div className="flex flex-col gap-6 md:gap-7">
+            {items
+              .filter((_, index) => index % 2 === 0)
+              .map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  index={items.indexOf(project)}
+                  onOpen={setSelectedProject}
+                  project={project}
+                />
+              ))}
+          </div>
+          <div className="flex flex-col gap-6 md:gap-7">
+            {items
+              .filter((_, index) => index % 2 === 1)
+              .map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  index={items.indexOf(project)}
+                  onOpen={setSelectedProject}
+                  project={project}
+                />
+              ))}
+          </div>
         </div>
 
         {viewMoreVisible ? (
@@ -486,63 +623,55 @@ function ProjectCard({
         showTooltip={false}
         displayOverlayContent
         overlayContent={
-          <article
-            className="project-card flex cursor-pointer flex-col gap-4 rounded-3xl border border-foreground/8 bg-background p-2.5 transition-transform duration-300 hover:-translate-y-1 sm:p-3.5"
-            onClick={() => onOpen(project)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                onOpen(project);
-              }
-            }}
-            role="button"
-            tabIndex={0}
-          >
-            {/* <header className="flex items-center gap-2.5 px-1 pt-2">
-              <span className="border-foreground/10 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border bg-background">
-                <Icon className="h-3.5 w-3.5 text-foreground" aria-hidden="true" />
-              </span>
-              <span className="text-sm font-medium tracking-tight text-foreground">
-                {project.iconLabel}
-              </span>
-            </header> */}
+<article
+                className="flex cursor-pointer flex-col gap-4 rounded-3xl bg-foreground/3 p-2.5 transition-transform duration-300 hover:-translate-y-1 sm:p-3.5"
+                onClick={() => onOpen(project)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    onOpen(project);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                <div
+                  className="project-card__image ring-foreground/5 relative w-full overflow-hidden rounded-[20px] bg-foreground/5 ring-1"
+                  style={{ aspectRatio: project.imageRatio }}
+                >
+                  <div className="project-card__image-inner">
+                    <Image
+                      src={project.image}
+                      alt={project.imageAlt}
+                      fill
+                      sizes="(min-width: 1024px) 540px, (min-width: 768px) 45vw, 100vw"
+                      className="object-cover"
+                      priority={index < 2}
+                    />
+                  </div>
+                </div>
 
-            <div
-              className="project-card__image ring-foreground/5 relative w-full overflow-hidden rounded-2xl bg-foreground/5 ring-1"
-              style={{ aspectRatio: project.imageRatio }}
-            >
-              <div className="project-card__image-inner">
-                <Image
-                  src={project.image}
-                  alt={project.imageAlt}
-                  fill
-                  sizes="(min-width: 1024px) 540px, (min-width: 768px) 45vw, 100vw"
-                  className="object-cover"
-                  priority={index < 2}
-                />
-              </div>
-            </div>
+                <div className="flex flex-col gap-2.5 px-1 pb-1">
+                  <h3 className="font-serif text-[22px] font-medium leading-[1.2] tracking-[-0.015em] text-foreground sm:text-[24px]">
+                    {project.title}
+                  </h3>
+                  <p className="text-[13px] font-medium tracking-tight text-foreground/85">
+                    {project.tagline}
+                  </p>
+                  <p className="text-[14px] leading-normal tracking-tight text-foreground/65 sm:text-[15px]">
+                    {project.description}
+                  </p>
+                </div>
 
-            <div className="flex flex-col gap-2.5 px-1 pb-1">
-              <h3 className="text-[20px] font-medium leading-[1.2] tracking-tight text-foreground sm:text-[22px]">
-                {project.title}
-              </h3>
-              <p className="text-[13px] font-medium tracking-tight text-foreground/85">
-                {project.tagline}
-              </p>
-              <p className="text-[14px] leading-normal tracking-tight text-foreground/65 sm:text-[15px]">
-                {project.description}
-              </p>
-            </div>
+                <div className="flex items-center justify-between px-1 pb-1">
+                  <p className="px-1 pb-2 text-[12px] tracking-tight text-foreground/50 tabular-nums">
+                    {project.meta}
+                  </p>
 
-            <div className="flex items-center justify-between px-1 pb-1">
-              <p className="px-1 pb-2 text-[12px] tracking-tight text-foreground/50">
-                {project.meta}
-              </p>
+                  <ArrowRight className="h-3.5 w-3.5 text-foreground/50" aria-hidden="true" />
+                </div>
+              </article>
 
-              <ArrowRight className="h-3.5 w-3.5 text-foreground/50" aria-hidden="true" />
-            </div>
-          </article>
         }
       />
     </FadeIn>
@@ -600,7 +729,7 @@ function ProjectModal({
               <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-foreground/45">
                 Project details
               </p>
-              <h3 className="mt-2 font-serif text-[2rem] font-medium leading-none tracking-tight text-foreground sm:text-[2.5rem]">
+              <h3 className="mt-2 font-serif text-[2rem] font-medium leading-none tracking-tight text-balance text-foreground sm:text-[2.5rem]">
                 {project.title}
               </h3>
             </div>
@@ -614,122 +743,123 @@ function ProjectModal({
             </button>
           </div>
 
-          <div className="relative px-3.5 py-5 sm:px-7 sm:py-7 lg:grid lg:grid-cols-[1.45fr_0.9fr] lg:gap-8">
-            <div className="flex flex-col gap-5 sm:gap-6">
-              <div className="relative overflow-hidden rounded-[1.75rem] border border-foreground/10 bg-foreground/5 ring-1 ring-foreground/5">
-                <div className="relative w-full" style={{ aspectRatio: 1200 / 810 }}>
-                  <Image
-                    alt={images[activeImageIndex]?.alt ?? project.imageAlt}
-                    src={images[activeImageIndex]?.src ?? project.image}
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 58vw, 100vw"
-                    className="object-cover"
-                  />
+          <div className="project-modal relative px-3.5 py-5 sm:px-7 sm:py-7 lg:grid lg:grid-cols-[1.45fr_0.9fr] lg:gap-8">
+                <div className="flex flex-col gap-5 sm:gap-6">
+                  <div className="relative overflow-hidden rounded-[1.75rem] border border-foreground/10 bg-foreground/5 ring-1 ring-foreground/5">
+                    <div className="relative w-full" style={{ aspectRatio: 1200 / 810 }}>
+                      <Image
+                        alt={images[activeImageIndex]?.alt ?? project.imageAlt}
+                        src={images[activeImageIndex]?.src ?? project.image}
+                        fill
+                        priority
+                        sizes="(min-width: 1024px) 58vw, 100vw"
+                        className="object-cover"
+                      />
 
-                  {hasMultipleImages ? (
-                    <>
-                      <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/25 bg-black/35 px-2 py-1 backdrop-blur">
-                        <button
-                          aria-label="Show previous project image"
-                          className="focus-ring inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition-colors hover:bg-white/20"
-                          onClick={goToPreviousImage}
-                          type="button"
-                        >
-                          <ChevronLeft className="h-3.5 w-3.5" aria-hidden="true" />
-                        </button>
+                      {hasMultipleImages ? (
+                        <>
+                          <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/25 bg-black/35 px-2 py-1 backdrop-blur">
+                            <button
+                              aria-label="Show previous project image"
+                              className="focus-ring inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition-colors hover:bg-white/20"
+                              onClick={goToPreviousImage}
+                              type="button"
+                            >
+                              <ChevronLeft className="h-3.5 w-3.5" aria-hidden="true" />
+                            </button>
 
-                        {images.map((image, index) => (
-                          <button
-                            key={image.alt}
-                            aria-label={`Show project image ${index + 1}`}
-                            aria-pressed={index === activeImageIndex}
-                            className={`h-2.5 w-2.5 rounded-full transition ${
-                              index === activeImageIndex
-                                ? "bg-white"
-                                : "bg-white/45 hover:bg-white/70"
-                            }`}
-                            onClick={() => setActiveImageIndex(index)}
-                            type="button"
-                          />
-                        ))}
+                            {images.map((image, index) => (
+                              <button
+                                key={image.alt}
+                                aria-label={`Show project image ${index + 1}`}
+                                aria-pressed={index === activeImageIndex}
+                                className={`h-2.5 w-2.5 rounded-full transition ${
+                                  index === activeImageIndex
+                                    ? "bg-white"
+                                    : "bg-white/45 hover:bg-white/70"
+                                }`}
+                                onClick={() => setActiveImageIndex(index)}
+                                type="button"
+                              />
+                            ))}
 
-                        <button
-                          aria-label="Show next project image"
-                          className="focus-ring inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition-colors hover:bg-white/20"
-                          onClick={goToNextImage}
-                          type="button"
-                        >
-                          <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-                        </button>
-                      </div>
-                    </>
-                  ) : null}
+                            <button
+                              aria-label="Show next project image"
+                              className="focus-ring inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white transition-colors hover:bg-white/20"
+                              onClick={goToNextImage}
+                              type="button"
+                            >
+                              <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+                            </button>
+                          </div>
+                        </>
+                      ) : null}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2.5 sm:gap-3">
+                    {project.liveHref ? (
+                      <Link
+                        className="focus-ring inline-flex items-center justify-center rounded-xl bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
+                        href={project.liveHref}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        View Live Demo
+                        <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                      </Link>
+                    ) : (
+                      <span className="inline-flex items-center justify-center rounded-xl border border-foreground/10 px-4 py-2.5 text-sm font-medium text-foreground/55">
+                        No live demo listed in the repo
+                      </span>
+                    )}
+
+                    <Link
+                      className="focus-ring inline-flex items-center justify-center rounded-xl border border-foreground/10 bg-background px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5"
+                      href={project.githubHref}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      View GitHub
+                      <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  </div>
+
+                  <div className="hidden lg:block">
+                    <ProjectStack stack={project.stack} />
+                  </div>
+                </div>
+
+                <div className="mt-5 flex flex-col gap-5 sm:mt-6 sm:gap-6 lg:mt-0">
+                  <div className="space-y-3.5 rounded-[1.5rem] border border-foreground/8 bg-foreground/[0.03] p-4 sm:p-5">
+                    <h4 className="text-xl font-medium tracking-tight text-foreground">
+                      {project.tagline}
+                    </h4>
+                    <p className="text-[15px] leading-7 tracking-tight text-foreground/65">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  <div className="lg:hidden">
+                    <ProjectStack stack={project.stack} />
+                  </div>
+
+                  <div className="space-y-3.5 rounded-[1.5rem] border border-foreground/8 bg-foreground/[0.03] p-4 sm:p-5">
+                    <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-foreground/45">
+                      Highlights
+                    </p>
+                    <ul className="space-y-2.5 text-[14px] leading-6 tracking-tight text-foreground/68">
+                      {project.highlights.map((item) => (
+                        <li className="flex gap-2" key={item}>
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/40" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2.5 sm:gap-3">
-                {project.liveHref ? (
-                  <Link
-                    className="focus-ring inline-flex items-center justify-center rounded-xl bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
-                    href={project.liveHref}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    View Live Demo
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </Link>
-                ) : (
-                  <span className="inline-flex items-center justify-center rounded-xl border border-foreground/10 px-4 py-2.5 text-sm font-medium text-foreground/55">
-                    No live demo listed in the repo
-                  </span>
-                )}
-
-                <Link
-                  className="focus-ring inline-flex items-center justify-center rounded-xl border border-foreground/10 bg-background px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-foreground/5"
-                  href={project.githubHref}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  View GitHub
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                </Link>
-              </div>
-
-              <div className="hidden lg:block">
-                <ProjectStack stack={project.stack} />
-              </div>
-            </div>
-
-            <div className="mt-5 flex flex-col gap-5 sm:mt-6 sm:gap-6 lg:mt-0">
-              <div className="space-y-3.5 rounded-[1.5rem] border border-foreground/8 bg-foreground/[0.03] p-4 sm:p-5">
-                <h4 className="text-xl font-medium tracking-tight text-foreground">
-                  {project.tagline}
-                </h4>
-                <p className="text-[15px] leading-7 tracking-tight text-foreground/65">
-                  {project.description}
-                </p>
-              </div>
-
-              <div className="lg:hidden">
-                <ProjectStack stack={project.stack} />
-              </div>
-
-              <div className="space-y-3.5 rounded-[1.5rem] border border-foreground/8 bg-foreground/[0.03] p-4 sm:p-5">
-                <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-foreground/45">
-                  Highlights
-                </p>
-                <ul className="space-y-2.5 text-[14px] leading-6 tracking-tight text-foreground/68">
-                  {project.highlights.map((item) => (
-                    <li className="flex gap-2" key={item}>
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/40" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
       </FadeIn>
     </div>
