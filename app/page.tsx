@@ -44,9 +44,9 @@ export default function HomePage(): ReactNode {
           >
             <div className="px-[34px] py-[38px]">
               <h2 className="font-serif text-[clamp(2rem,1.4rem_+_2vw,2.7rem)] font-medium leading-[1.08] tracking-[-0.02em] text-balance text-foreground">
-                The name&rsquo;s familiar — here&rsquo;s{" "}
+                From idea to{" "}
                 <span className="border-b border-foreground/30 pb-0.5">
-                  how I work
+                  production
                 </span>
                 .
               </h2>
