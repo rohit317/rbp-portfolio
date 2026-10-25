@@ -45,6 +45,45 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
+    id: "kanbi",
+    icon: KanbanSquare,
+    iconLabel: "Kanbi",
+    title: "Kanbi",
+    tagline: "A fast, keyboard-first kanban for personal projects and small teams.",
+    description:
+      "A simple kanban project tracker for personal projects and small teams, with realtime updates, comments, and optional AI task drafting.",
+    meta: "Next.js 15 · tRPC · Drizzle · Better Auth",
+    stack: ["Next.js 15", "tRPC v11", "Drizzle ORM", "Better Auth", "Tailwind v4", "dnd-kit", "Tiptap"],
+    liveHref: "https://kanbi-web.vercel.app/",
+    githubHref: "https://github.com/rohit317/Kanbi",
+    highlights: [
+      "Boards with drag-and-drop columns and tasks",
+      "Realtime updates, comments, and online presence",
+      "Optional AI task drafting and project invites",
+    ],
+    imageRatio: 1200 / 800,
+    image: "/projects/kanbi-cover.svg",
+    imageAlt: "Kanbi illustrated cover art",
+    modalImages: [
+      {
+        src: "/projects/kanbi-home.png",
+        alt: "Kanbi landing page",
+      },
+      {
+        src: "/projects/kanbi-dashboard.png",
+        alt: "Kanbi dashboard with assigned tasks and projects",
+      },
+      {
+        src: "/projects/kanbi-board.png",
+        alt: "Kanbi board with drag-and-drop columns, priorities, and filters",
+      },
+      {
+        src: "/projects/kanbi-task.png",
+        alt: "Kanbi task detail with status, checklist, comments, and activity",
+      },
+    ],
+  },
+  {
     id: "applypilot",
     icon: PlaneTakeoff,
     iconLabel: "ApplyPilot",
@@ -111,45 +150,6 @@ const PROJECTS: Project[] = [
       {
         src: "/projects/codeforge-machine-coding.png",
         alt: "CodeForge machine coding challenges",
-      },
-    ],
-  },
-  {
-    id: "kanbi",
-    icon: KanbanSquare,
-    iconLabel: "Kanbi",
-    title: "Kanbi",
-    tagline: "A fast, keyboard-first kanban for personal projects and small teams.",
-    description:
-      "A simple kanban project tracker for personal projects and small teams, with realtime updates, comments, and optional AI task drafting.",
-    meta: "Next.js 15 · tRPC · Drizzle · Better Auth",
-    stack: ["Next.js 15", "tRPC v11", "Drizzle ORM", "Better Auth", "Tailwind v4", "dnd-kit", "Tiptap"],
-    liveHref: "https://kanbi-web.vercel.app/",
-    githubHref: "https://github.com/rohit317/Kanbi",
-    highlights: [
-      "Boards with drag-and-drop columns and tasks",
-      "Realtime updates, comments, and online presence",
-      "Optional AI task drafting and project invites",
-    ],
-    imageRatio: 1200 / 800,
-    image: "/projects/kanbi-cover.svg",
-    imageAlt: "Kanbi illustrated cover art",
-    modalImages: [
-      {
-        src: "/projects/kanbi-home.png",
-        alt: "Kanbi landing page",
-      },
-      {
-        src: "/projects/kanbi-dashboard.png",
-        alt: "Kanbi dashboard with assigned tasks and projects",
-      },
-      {
-        src: "/projects/kanbi-board.png",
-        alt: "Kanbi board with drag-and-drop columns, priorities, and filters",
-      },
-      {
-        src: "/projects/kanbi-task.png",
-        alt: "Kanbi task detail with status, checklist, comments, and activity",
       },
     ],
   },

@@ -2,21 +2,40 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { Check, Copy, Mail } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { ReactNode } from "react";
 
 const EMAIL = "rohit.totlani.317@gmail.com";
 const EASE = [0.22, 1, 0.36, 1] as const;
+const COPIED_MS = 1600;
 
 export function ContactButton(): ReactNode {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  // The button must never collapse as a *result of clicking*. Hover and
+  // focus can close it, but only once the copied window has elapsed.
+  const engagedRef = useRef(false);
+  const copiedUntilRef = useRef(0);
+
+  const collapseIfIdle = (): void => {
+    if (!engagedRef.current && Date.now() >= copiedUntilRef.current) {
+      setOpen(false);
+    }
+  };
+
+  const markCopied = (): void => {
+    copiedUntilRef.current = Date.now() + COPIED_MS;
+    setCopied(true);
+    window.setTimeout(() => {
+      setCopied(false);
+      collapseIfIdle();
+    }, COPIED_MS);
+  };
 
   const handleCopy = async (): Promise<void> => {
     try {
       await navigator.clipboard.writeText(EMAIL);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1600);
+      markCopied();
     } catch {
       const ta = document.createElement("textarea");
       ta.value = EMAIL;
@@ -26,8 +45,7 @@ export function ContactButton(): ReactNode {
       ta.select();
       try {
         document.execCommand("copy");
-        setCopied(true);
-        window.setTimeout(() => setCopied(false), 1600);
+        markCopied();
       } catch {}
       document.body.removeChild(ta);
     }
@@ -38,10 +56,22 @@ export function ContactButton(): ReactNode {
       type="button"
       layout
       onClick={handleCopy}
-      onHoverStart={() => setOpen(true)}
-      onHoverEnd={() => setOpen(false)}
-      onFocus={() => setOpen(true)}
-      onBlur={() => setOpen(false)}
+      onHoverStart={() => {
+        engagedRef.current = true;
+        setOpen(true);
+      }}
+      onHoverEnd={() => {
+        engagedRef.current = false;
+        collapseIfIdle();
+      }}
+      onFocus={() => {
+        engagedRef.current = true;
+        setOpen(true);
+      }}
+      onBlur={() => {
+        engagedRef.current = false;
+        collapseIfIdle();
+      }}
       aria-label={
         copied ? "Email copied" : open ? `Copy ${EMAIL}` : "Show email"
       }

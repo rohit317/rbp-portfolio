@@ -52,7 +52,7 @@ export default function HomePage(): ReactNode {
               </h2>
               <div className="mt-[25px] grid max-w-[58ch] gap-[17px] text-[17px] leading-[1.7] tracking-[-0.005em] text-pretty text-foreground/75">
                 <p>
-                  I build full-stack products that pair polished frontend experiences with reliable backend architecture, cloud-native infrastructure, and AI agents that do real work.
+                  I build full-stack products that are fast on the front, solid in the back, and smart throughout — with AI agents that do real work.
                 </p>
                 <p>
                   Good software isn&rsquo;t just built — it&rsquo;s operated. I sweat the pipelines, the tests, and the deploys so what ships on Friday is still boring by Monday.

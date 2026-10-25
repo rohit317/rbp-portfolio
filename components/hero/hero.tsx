@@ -19,7 +19,7 @@ export function Hero(): ReactNode {
                 <span aria-hidden="true" className="mx-1">
                   👋
                 </span>
-                , I&rsquo;m Rohit
+                , I&rsquo;m Rohit Totlani
               </p>
 
               <h1 className="font-serif text-[clamp(1.9rem,10vw_-_5px,3.25rem)] font-medium leading-[1.02] tracking-[-0.02em] text-foreground md:text-[clamp(2.1rem,5vw_-_6px,3.6rem)]">
