@@ -17,6 +17,8 @@ const CLIPS: Clip[] = [
   { id: "b", src: "/polaroids/polaroid-2.mp4", poster: "/polaroids/polaroid-2.jpg", rotate: 6 },
   { id: "c", src: "/polaroids/polaroid-3.mp4", poster: "/polaroids/polaroid-3.jpg", rotate: -4 },
   { id: "d", src: "/polaroids/polaroid-4.mp4", poster: "/polaroids/polaroid-4.jpg", rotate: 7 },
+  { id: "e", src: "/polaroids/polaroid-5.mp4", poster: "/polaroids/polaroid-5.jpg", rotate: -6 },
+  { id: "f", src: "/polaroids/polaroid-6.mp4", poster: "/polaroids/polaroid-6.jpg", rotate: 5 },
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
