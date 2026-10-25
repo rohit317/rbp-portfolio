@@ -60,8 +60,8 @@ const PROJECTS: Project[] = [
       "Human approval gate before any tailored PDF/DOCX resume is produced",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/applypilot-home.png",
-    imageAlt: "ApplyPilot landing page with the fitness scoring card",
+    image: "/projects/applypilot-cover.png",
+    imageAlt: "ApplyPilot illustrated cover art",
     modalImages: [
       {
         src: "/projects/applypilot-home.png",
@@ -95,8 +95,8 @@ const PROJECTS: Project[] = [
       "System-design puzzle game with traffic simulation and calibrated three-star scoring",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/codeforge-home.png",
-    imageAlt: "CodeForge landing page",
+    image: "/projects/codeforge-cover.png",
+    imageAlt: "CodeForge illustrated cover art",
     modalImages: [
       {
         src: "/projects/codeforge-home.png",
@@ -130,8 +130,8 @@ const PROJECTS: Project[] = [
       "Optional AI task drafting and project invites",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/kanbi-home.png",
-    imageAlt: "Kanbi landing page",
+    image: "/projects/kanbi-cover.png",
+    imageAlt: "Kanbi illustrated cover art",
     modalImages: [
       {
         src: "/projects/kanbi-home.png",
@@ -165,8 +165,8 @@ const PROJECTS: Project[] = [
       "Tone controls, custom tinting, and live theme switching",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/askey-animation.png",
-    imageAlt: "askey converting an animated sequence into ASCII art",
+    image: "/projects/askey-cover.png",
+    imageAlt: "askey illustrated cover art",
     modalImages: [
       {
         src: "/projects/askey-animation.png",
@@ -196,8 +196,8 @@ const PROJECTS: Project[] = [
       "Profile and post management backed by client/server routes",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/pasteez-editor.png",
-    imageAlt: "Pasteez paste editor with syntax highlighting",
+    image: "/projects/pasteez-cover.png",
+    imageAlt: "Pasteez illustrated cover art",
     modalImages: [
       {
         src: "/projects/pasteez-editor.png",
@@ -227,8 +227,8 @@ const PROJECTS: Project[] = [
       "Motion-rich single-page UX with custom design tokens",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/cleanncut-hero.png",
-    imageAlt: "Clean & Cut landing page",
+    image: "/projects/cleancut-cover.png",
+    imageAlt: "Clean & Cut illustrated cover art",
     modalImages: [
       {
         src: "/projects/cleanncut-hero.png",
