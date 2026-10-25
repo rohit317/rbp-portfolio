@@ -1,6 +1,18 @@
 "use client";
 
-import { RotateCcw } from "lucide-react";
+import {
+  Accessibility,
+  Component,
+  Database,
+  Frame,
+  RotateCcw,
+  Rocket,
+  Shapes,
+  Sparkles,
+  Workflow,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -16,6 +28,7 @@ type Chip = {
   bg: string;
   fg: string;
   iconUrl?: string;
+  icon?: LucideIcon;
 };
 
 type Category = {
@@ -53,13 +66,13 @@ const CATEGORIES: Category[] = [
       { label: "AWS", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", bg: "#FF9900", fg: "#111111" },
       { label: "TensorFlow", slug: "tensorflow", bg: "#FF6F00", fg: "#ffffff" },
       { label: "PyTorch", slug: "pytorch", bg: "#EE4C2C", fg: "#ffffff" },
-      { label: "MLOps", bg: "#3730A3", fg: "#ffffff" },
-      { label: "Accessibility", bg: "#047857", fg: "#ffffff" },
-      { label: "Design Systems", bg: "#8B5CF6", fg: "#ffffff" },
-      { label: "Prototyping", bg: "#FB7185", fg: "#111111" },
-      { label: "Wireframing", bg: "#F59E0B", fg: "#111111" },
-      { label: "CI/CD", bg: "#0F172A", fg: "#ffffff" },
-      { label: "Prompt Engineering", bg: "#4338CA", fg: "#ffffff" },
+      { label: "MLOps", icon: Workflow, bg: "#3730A3", fg: "#ffffff" },
+      { label: "Accessibility", icon: Accessibility, bg: "#047857", fg: "#ffffff" },
+      { label: "Design Systems", icon: Component, bg: "#8B5CF6", fg: "#ffffff" },
+      { label: "Prototyping", icon: Shapes, bg: "#FB7185", fg: "#111111" },
+      { label: "Wireframing", icon: Frame, bg: "#F59E0B", fg: "#111111" },
+      { label: "CI/CD", icon: Rocket, bg: "#0F172A", fg: "#ffffff" },
+      { label: "Prompt Engineering", icon: Sparkles, bg: "#4338CA", fg: "#ffffff" },
     ],
   },
   {
@@ -69,11 +82,11 @@ const CATEGORIES: Category[] = [
     chips: [
       { label: "Figma", slug: "figma", bg: "#1f1f1f", fg: "#ffffff", iconUrl: "https://svgl.app/library/figma.svg" },
       { label: "Adobe XD", iconUrl: "https://svgl.app/library/adobe-xd.svg", bg: "#FF61F6", fg: "#111111" },
-      { label: "Design Systems", bg: "#8B5CF6", fg: "#ffffff" },
-      { label: "Wireframing", bg: "#F59E0B", fg: "#111111" },
-      { label: "Prototyping", bg: "#FB7185", fg: "#111111" },
-      { label: "Accessibility", bg: "#047857", fg: "#ffffff" },
-      { label: "Motion Design", bg: "#22C55E", fg: "#111111" },
+      { label: "Design Systems", icon: Component, bg: "#8B5CF6", fg: "#ffffff" },
+      { label: "Wireframing", icon: Frame, bg: "#F59E0B", fg: "#111111" },
+      { label: "Prototyping", icon: Shapes, bg: "#FB7185", fg: "#111111" },
+      { label: "Accessibility", icon: Accessibility, bg: "#047857", fg: "#ffffff" },
+      { label: "Motion Design", icon: Zap, bg: "#22C55E", fg: "#111111" },
     ],
   },
   {
@@ -115,7 +128,7 @@ const CATEGORIES: Category[] = [
       { label: "Docker", slug: "docker", bg: "#2496ED", fg: "#ffffff" },
       { label: "Kubernetes", slug: "kubernetes", bg: "#326CE5", fg: "#ffffff" },
       { label: "AWS", iconUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", bg: "#FF9900", fg: "#111111" },
-      { label: "CI/CD", bg: "#0F172A", fg: "#ffffff" },
+      { label: "CI/CD", icon: Rocket, bg: "#0F172A", fg: "#ffffff" },
       { label: "Terraform", slug: "terraform", bg: "#6D7A8D", fg: "#ffffff" },
       { label: "GitHub Actions", slug: "githubactions", bg: "#222222", fg: "#ffffff" },
     ],
@@ -128,9 +141,9 @@ const CATEGORIES: Category[] = [
       { label: "Python", slug: "python", bg: "#3776AB", fg: "#ffffff" },
       { label: "TensorFlow", slug: "tensorflow", bg: "#FF6F00", fg: "#ffffff" },
       { label: "PyTorch", slug: "pytorch", bg: "#EE4C2C", fg: "#ffffff" },
-      { label: "MLOps", bg: "#3730A3", fg: "#ffffff" },
-      { label: "Prompt Engineering", bg: "#4338CA", fg: "#ffffff" },
-      { label: "Data Pipelines", bg: "#0F766E", fg: "#ffffff" },
+      { label: "MLOps", icon: Workflow, bg: "#3730A3", fg: "#ffffff" },
+      { label: "Prompt Engineering", icon: Sparkles, bg: "#4338CA", fg: "#ffffff" },
+      { label: "Data Pipelines", icon: Database, bg: "#0F766E", fg: "#ffffff" },
     ],
   },
 ];
@@ -565,7 +578,13 @@ export function Stack(): ReactNode {
           style={{ borderRadius: `${ICON_RADIUS}px` }}
           aria-hidden="true"
         >
-          {chip.slug || chip.iconUrl ? (
+          {chip.icon ? (
+            <chip.icon
+              className="h-5 w-5"
+              strokeWidth={2}
+              style={{ color: "#111827" }}
+            />
+          ) : chip.slug || chip.iconUrl ? (
             <img
               src={chip.iconUrl ?? `https://cdn.simpleicons.org/${chip.slug}`}
               alt=""
