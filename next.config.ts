@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "inline",
     remotePatterns: [
       {
         protocol: "https",

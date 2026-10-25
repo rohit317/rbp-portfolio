@@ -60,7 +60,7 @@ const PROJECTS: Project[] = [
       "Human approval gate before any tailored PDF/DOCX resume is produced",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/applypilot-cover.png",
+    image: "/projects/applypilot-cover.svg",
     imageAlt: "ApplyPilot illustrated cover art",
     modalImages: [
       {
@@ -95,7 +95,7 @@ const PROJECTS: Project[] = [
       "System-design puzzle game with traffic simulation and calibrated three-star scoring",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/codeforge-cover.png",
+    image: "/projects/codeforge-cover.svg",
     imageAlt: "CodeForge illustrated cover art",
     modalImages: [
       {
@@ -130,7 +130,7 @@ const PROJECTS: Project[] = [
       "Optional AI task drafting and project invites",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/kanbi-cover.png",
+    image: "/projects/kanbi-cover.svg",
     imageAlt: "Kanbi illustrated cover art",
     modalImages: [
       {
@@ -165,7 +165,7 @@ const PROJECTS: Project[] = [
       "Tone controls, custom tinting, and live theme switching",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/askey-cover.png",
+    image: "/projects/askey-cover.svg",
     imageAlt: "askey illustrated cover art",
     modalImages: [
       {
@@ -196,7 +196,7 @@ const PROJECTS: Project[] = [
       "Profile and post management backed by client/server routes",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/pasteez-cover.png",
+    image: "/projects/pasteez-cover.svg",
     imageAlt: "Pasteez illustrated cover art",
     modalImages: [
       {
@@ -227,7 +227,7 @@ const PROJECTS: Project[] = [
       "Motion-rich single-page UX with custom design tokens",
     ],
     imageRatio: 1200 / 800,
-    image: "/projects/cleancut-cover.png",
+    image: "/projects/cleancut-cover.svg",
     imageAlt: "Clean & Cut illustrated cover art",
     modalImages: [
       {

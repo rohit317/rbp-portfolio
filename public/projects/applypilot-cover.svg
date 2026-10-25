@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#05372a"/>
+      <stop offset="0.55" stop-color="#0a6b4f"/>
+      <stop offset="1" stop-color="#12996d"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#6ee7b7" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#6ee7b7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#ffffff" opacity="0.14"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="1050" cy="120" r="420" fill="url(#glow1)"/>
+  <circle cx="140" cy="720" r="380" fill="url(#glow2)"/>
+  <rect width="1200" height="800" fill="url(#dots)"/>
+
+  <text x="52" y="62" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="700" letter-spacing="6" fill="#a7f3d0">01 APPLYPILOT</text>
+
+  <!-- trajectory -->
+  <path d="M70 560 C 200 480, 180 380, 330 385 S 520 300, 560 250" fill="none" stroke="#a7f3d0" stroke-opacity="0.75" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round"/>
+  <circle cx="70" cy="560" r="7" fill="#34d399"/>
+  <g transform="translate(300 330) rotate(-18)">
+    <path d="M0 26 L78 0 L50 58 L35 38 L24 48 L24 34 Z" fill="#ecfdf5" opacity="0.95"/>
+  </g>
+
+  <!-- terminal card -->
+  <g>
+    <rect x="470" y="150" width="660" height="380" rx="20" fill="#07130f" opacity="0.92"/>
+    <rect x="470" y="150" width="660" height="380" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.16"/>
+    <line x1="470" y1="208" x2="1130" y2="208" stroke="#ffffff" stroke-opacity="0.1"/>
+    <circle cx="502" cy="180" r="7" fill="#f87171"/>
+    <circle cx="526" cy="180" r="7" fill="#fbbf24"/>
+    <circle cx="550" cy="180" r="7" fill="#34d399"/>
+    <text x="576" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" letter-spacing="2" fill="#ffffff" opacity="0.55">applypilot · run 3f94</text>
+    <rect x="962" y="164" width="146" height="32" rx="16" fill="#fbbf24" fill-opacity="0.1" stroke="#fbbf24" stroke-opacity="0.6"/>
+    <text x="1035" y="185" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" letter-spacing="2" font-weight="700" fill="#fbbf24">HUMAN GATE</text>
+
+    <text x="508" y="266" font-size="27" font-weight="700" fill="#f4f4f5">Senior Full Stack Developer</text>
+    <text x="508" y="294" font-size="16" fill="#ffffff" opacity="0.5">Example Corp · Toronto</text>
+
+    <!-- fitness ring -->
+    <g transform="translate(590 420)">
+      <circle r="66" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="24"/>
+      <circle r="66" fill="none" stroke="#34d399" stroke-width="24" stroke-linecap="round" stroke-dasharray="311 415" transform="rotate(-90)"/>
+      <text y="2" text-anchor="middle" font-size="40" font-weight="800" fill="#34d399">75</text>
+      <text y="28" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" letter-spacing="4" fill="#ffffff" opacity="0.5">FITNESS</text>
+    </g>
+
+    <!-- bars -->
+    <g font-size="15" fill="#ffffff">
+      <text x="700" y="366" opacity="0.65">Skills overlap <tspan font-weight="700" fill="#e5e7eb">×3</tspan></text>
+      <rect x="700" y="376" width="392" height="10" rx="5" fill="#ffffff" opacity="0.14"/>
+      <rect x="700" y="376" width="325" height="10" rx="5" fill="#34d399"/>
+      <text x="700" y="428" opacity="0.65">Years of experience <tspan font-weight="700" fill="#e5e7eb">×2</tspan></text>
+      <rect x="700" y="438" width="392" height="10" rx="5" fill="#ffffff" opacity="0.14"/>
+      <rect x="700" y="438" width="216" height="10" rx="5" fill="#fbbf24"/>
+      <text x="700" y="490" opacity="0.65">Domain relevance <tspan font-weight="700" fill="#e5e7eb">×2</tspan></text>
+      <rect x="700" y="500" width="392" height="10" rx="5" fill="#ffffff" opacity="0.14"/>
+      <rect x="700" y="500" width="274" height="10" rx="5" fill="#34d399"/>
+    </g>
+  </g>
+
+  <!-- pipeline chips -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" letter-spacing="2">
+    <rect x="52" y="672" width="86" height="38" rx="19" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.28"/>
+    <text x="95" y="696" text-anchor="middle" fill="#d1fae5">PARSE</text>
+    <rect x="150" y="672" width="86" height="38" rx="19" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.28"/>
+    <text x="193" y="696" text-anchor="middle" fill="#d1fae5">SCORE</text>
+    <rect x="248" y="672" width="86" height="38" rx="19" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.28"/>
+    <text x="291" y="696" text-anchor="middle" fill="#d1fae5">DRAFT</text>
+    <rect x="346" y="672" width="100" height="38" rx="19" fill="#fbbf24" fill-opacity="0.12" stroke="#fbbf24" stroke-opacity="0.6"/>
+    <text x="396" y="696" text-anchor="middle" fill="#fbbf24">REVIEW</text>
+  </g>
+
+  <text x="52" y="762" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="3" fill="#a7f3d0" font-weight="700" opacity="0.85">AGENTIC APPLICATION COPILOT</text>
+  <text x="1148" y="762" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="3" fill="#a7f3d0" font-weight="700" opacity="0.85">LANGGRAPH · LLAMAINDEX</text>
+</svg>
