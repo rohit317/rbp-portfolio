@@ -2,13 +2,13 @@
 name: RBP Portfolio
 description: Personal portfolio of Rohit Totlani — full stack developer
 colors:
-  background-light: "#ffffff"
+  background-light: "#faf9f5"
   foreground-light: "#0a0a0a"
   background-dark: "#0a0a0a"
   foreground-dark: "#fafafa"
-  muted: "#f5f5f5"
+  muted: "#f0eee7"
   muted-foreground: "#737373"
-  border: "#e5e5e5"
+  border: "#e6e3da"
   ring-light: "#0066ff"
   ring-dark: "#3b82f6"
 typography:
