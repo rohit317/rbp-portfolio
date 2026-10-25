@@ -43,9 +43,13 @@ export default function HomePage(): ReactNode {
             animateOnInView
           >
             <div className="px-[34px] py-[38px]">
-              <h1 className="font-serif text-[clamp(2rem,1.4rem_+_2vw,2.7rem)] font-medium leading-[1.08] tracking-[-0.02em] text-balance text-foreground">
-                Hello! I&rsquo;m <span className="border-b border-foreground/30 pb-0.5">Rohit Totlani</span>.
-              </h1>
+              <h2 className="font-serif text-[clamp(2rem,1.4rem_+_2vw,2.7rem)] font-medium leading-[1.08] tracking-[-0.02em] text-balance text-foreground">
+                The name&rsquo;s familiar — here&rsquo;s{" "}
+                <span className="border-b border-foreground/30 pb-0.5">
+                  how I work
+                </span>
+                .
+              </h2>
               <div className="mt-[25px] grid max-w-[58ch] gap-[17px] text-[17px] leading-[1.7] tracking-[-0.005em] text-pretty text-foreground/75">
                 <p>
                   I build full-stack products that pair polished frontend experiences with reliable backend architecture, cloud-native infrastructure, and AI-enhanced workflows.
