@@ -12,7 +12,7 @@ const CARD_FADE_MASK =
 
 export function ContactCard(): ReactNode {
   return (
-    <section className="mx-auto my-12 w-full max-w-275 px-3.5 sm:my-20 sm:px-10">
+    <section className="mx-auto my-12 w-full max-w-4xl px-3.5 sm:my-20 sm:px-6">
       <FadeIn>
         <div className="relative w-full overflow-hidden rounded-4xl border border-foreground/8 bg-background p-1.5 shadow-sm">
           <div className="relative w-full overflow-hidden rounded-[1.6rem]">
@@ -27,19 +27,19 @@ export function ContactCard(): ReactNode {
               <ShaderFlow scale={5} brightness={3}/>
             </div>
 
-            <div className="relative flex flex-col items-center px-5 py-10 text-center sm:px-8 sm:py-14">
-              <h2 className="font-serif text-[2.25rem] font-medium leading-[1.05] tracking-tight text-balance text-foreground sm:text-[2.75rem]">
+            <div className="relative flex flex-col items-center px-5 py-8 text-center sm:px-8 sm:py-12">
+              <h2 className="font-serif text-[2.25rem] font-medium leading-[1.05] tracking-tight text-balance text-foreground sm:text-[2.6rem]">
                 Let&rsquo;s connect
               </h2>
-              <p className="mt-4 max-w-[46ch] text-[16px] leading-[1.55] tracking-tight text-foreground/65 sm:text-[18px]">
+              <p className="mt-4 max-w-[46ch] text-[16px] leading-[1.55] tracking-tight text-foreground/65 sm:text-[17px]">
                 I&rsquo;m always open to discussing new projects, creative
                 ideas, or opportunities to be part of your visions. Just reach out!
               </p>
-              <div className="mt-7 flex justify-center">
+              <div className="mt-6 flex justify-center">
                 <ContactCardCtas />
               </div>
 
-              <div className="mt-9 flex flex-col items-center gap-4">
+              <div className="mt-8 flex flex-col items-center gap-4">
                 <span aria-hidden="true" className="h-px w-14 bg-foreground/15" />
                 <div className="flex items-center gap-3">
                   <SocialIcon

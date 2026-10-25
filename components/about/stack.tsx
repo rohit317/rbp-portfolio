@@ -295,17 +295,16 @@ export function Stack(): ReactNode {
       const mouse = Mouse.create(container);
 
       // Matter attaches a non-passive wheel handler that calls
-      // preventDefault, which kills page scrolling over the field.
-      // Detach it (all legacy event names, for good measure).
-      const wheelTarget = mouse.element as HTMLElement & {
-        mousewheel?: EventListener;
-      };
-      if (wheelTarget.mousewheel) {
-        wheelTarget.removeEventListener("wheel", wheelTarget.mousewheel);
-        wheelTarget.removeEventListener("mousewheel", wheelTarget.mousewheel);
-        wheelTarget.removeEventListener(
+      // preventDefault, which kills page scrolling over the field. The
+      // handler lives on the Mouse object (not the element) — detach it
+      // under every legacy event name, for good measure.
+      const mouseHandlers = mouse as unknown as { mousewheel?: EventListener };
+      if (mouseHandlers.mousewheel) {
+        container.removeEventListener("wheel", mouseHandlers.mousewheel);
+        container.removeEventListener("mousewheel", mouseHandlers.mousewheel);
+        container.removeEventListener(
           "DOMMouseScroll",
-          wheelTarget.mousewheel
+          mouseHandlers.mousewheel
         );
       }
 
@@ -346,6 +345,12 @@ export function Stack(): ReactNode {
 
         Mouse.clearSourceEvents(mouse);
       };
+
+      // Belt and braces: nothing may cancel wheel scrolling over the field.
+      // Stop propagation (so no ancestor handler can preventDefault it)
+      // while letting the browser's default scroll run.
+      const shieldWheel = (event: Event): void => event.stopPropagation();
+      container.addEventListener("wheel", shieldWheel, { passive: true });
 
       window.addEventListener("mouseup", releasePointer, { passive: true });
       window.addEventListener("touchend", releasePointer, { passive: true });
@@ -392,6 +397,7 @@ export function Stack(): ReactNode {
         cancelAnimationFrame(raf);
         window.removeEventListener("mouseup", releasePointer);
         window.removeEventListener("touchend", releasePointer);
+        container.removeEventListener("wheel", shieldWheel);
         // Detach Matter's element listeners; otherwise every re-run of this
         // effect (category switch, StrictMode remount) leaves another wheel
         // handler that preventDefaults scrolling over the field.

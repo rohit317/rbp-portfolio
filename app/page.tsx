@@ -60,13 +60,17 @@ export default function HomePage(): ReactNode {
       </section>
 
       <section className="-mt-9 mx-auto w-full max-w-[680px] px-3.5 pb-0 sm:-mt-15 sm:px-0 sm:pb-0">
-        <FadeIn delay={0.1}>
-          <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-10">
+          <FadeIn triggerOnce amount={0.2}>
             <Experience />
+          </FadeIn>
+          <FadeIn triggerOnce amount={0.15} delay={0.05}>
             <Education />
+          </FadeIn>
+          <FadeIn triggerOnce amount={0.1}>
             <Stack />
-          </div>
-        </FadeIn>
+          </FadeIn>
+        </div>
       </section>
 
       <div id="projects" className="relative w-full">
