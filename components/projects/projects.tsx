@@ -16,8 +16,10 @@ import { createPortal } from "react-dom";
 import { useEffect, useState, type ComponentType, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { AnimatePresence, motion } from "motion/react";
 
 import { FadeIn } from "@/components/ui/motion-primitives";
+import { useReducedMotion } from "@/lib/motion";
 import TiltedCard from "../ui/tilted-card";
 
 type Project = {
@@ -350,12 +352,16 @@ export function Projects({
         ) : null}
       </div>
 
-      {selectedProject && isMounted
+      {isMounted
         ? createPortal(
-          <ProjectModal
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />,
+          <AnimatePresence>
+            {selectedProject ? (
+              <ProjectModal
+                project={selectedProject}
+                onClose={() => setSelectedProject(null)}
+              />
+            ) : null}
+          </AnimatePresence>,
           document.body,
         )
         : null}
@@ -488,6 +494,23 @@ function ProjectModal({
     );
   };
 
+  const reducedMotion = useReducedMotion();
+  const arrive = reducedMotion
+    ? { opacity: 0 }
+    : { opacity: 0, y: 28, scale: 0.97, filter: "blur(8px)" };
+  const settled = reducedMotion
+    ? { opacity: 1 }
+    : { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" };
+  const depart = reducedMotion
+    ? { opacity: 0, transition: { duration: 0.01 } }
+    : {
+      opacity: 0,
+      y: 14,
+      scale: 0.985,
+      filter: "blur(6px)",
+      transition: { duration: 0.2, ease: "easeIn" as const },
+    };
+
   return (
     <div
       aria-modal="true"
@@ -500,10 +523,22 @@ function ProjectModal({
       }}
       style={{ WebkitOverflowScrolling: "touch" }}
     >
-      <div className="pointer-events-none absolute inset-0 bg-background/92 backdrop-blur-[24px]" />
+      <motion.div
+        className="pointer-events-none absolute inset-0 bg-background/92 backdrop-blur-[24px]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: reducedMotion ? 0.01 : 0.3 }}
+      />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_38%),radial-gradient(circle_at_bottom_right,_rgba(99,102,241,0.12),_transparent_35%)] opacity-100" />
 
-      <FadeIn className="relative z-10 w-full max-w-5xl" duration={0.45}>
+      <motion.div
+        className="relative z-10 w-full max-w-5xl"
+        initial={arrive}
+        animate={settled}
+        exit={depart}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="relative flex max-h-[calc(100dvh-1.5rem)] flex-col overflow-y-auto overscroll-contain rounded-[1.5rem] border border-foreground/10 bg-background shadow-[0_30px_100px_rgba(0,0,0,0.28)] sm:max-h-[calc(100dvh-2rem)] sm:rounded-[2rem]" style={{ WebkitOverflowScrolling: "touch" }}>
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.08),_transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_30%)]" />
           <div className="sticky top-0 z-20 flex items-start justify-between gap-4 border-b border-foreground/8 bg-background/96 px-3.5 py-4 backdrop-blur-xl sm:px-7 sm:py-5">
@@ -643,7 +678,7 @@ function ProjectModal({
               </div>
 
         </div>
-      </FadeIn>
+      </motion.div>
     </div>
   );
 }

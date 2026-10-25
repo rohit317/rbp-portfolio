@@ -1,9 +1,12 @@
 "use client";
 
 import { RotateCcw } from "lucide-react";
+import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
+
+import { useReducedMotion } from "@/lib/motion";
 
 const LiquidEther = dynamic(() => import("../ui/liquid-ether"), { ssr: false });
 
@@ -145,6 +148,7 @@ type ChipState = {
 
 export function Stack(): ReactNode {
   const { resolvedTheme } = useTheme();
+  const reducedMotion = useReducedMotion();
   const stackRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const measureRef = useRef<HTMLDivElement | null>(null);
@@ -443,7 +447,15 @@ export function Stack(): ReactNode {
             aria-label="Reset stack"
             className="focus-ring border-foreground/8 bg-background text-foreground/70 hover:text-foreground inline-flex h-9 w-9 items-center justify-center rounded-xl border transition-colors"
           >
-            <RotateCcw className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
+            <motion.span
+              key={resetKey}
+              initial={{ rotate: reducedMotion ? 0 : -360 }}
+              animate={{ rotate: 0 }}
+              transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="inline-flex"
+            >
+              <RotateCcw className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
+            </motion.span>
           </button>
         </div>
 
