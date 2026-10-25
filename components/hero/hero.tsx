@@ -11,7 +11,7 @@ const PORTRAIT_HOVER_SRC = "/rohit-linkedin.jpg";
 export function Hero(): ReactNode {
   return (
     <section className="relative flex min-h-svh w-full items-center">
-      <div className="mx-auto w-full max-w-275 px-6 pt-24 pb-24 sm:px-10 sm:pt-28 sm:pb-28 md:max-w-320">
+      <div className="mx-auto w-full max-w-275 px-6 pt-28 pb-24 sm:px-10 sm:pt-28 sm:pb-28 md:max-w-320">
           <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-[1.15fr_1fr] md:gap-10">
             <FadeIn className="flex flex-col gap-4">
               <p className="font-serif text-[25px] font-medium leading-tight tracking-[-0.01em] text-foreground sm:text-[28px]">
