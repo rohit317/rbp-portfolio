@@ -1,3 +1,5 @@
+"use client";
+
 import { useTheme } from 'next-themes';
 import { useRef, useCallback, useState, useEffect, type ReactNode } from 'react';
 
