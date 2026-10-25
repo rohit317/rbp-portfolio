@@ -221,12 +221,10 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
         transform: 'translate3d(0, 0, 0.01px)',
       }}
     >
-      {/* mesh gradient border — offset by the shell's 1px border so the
-          ring lands on the card's true edge instead of 1px inside it */}
+      {/* mesh gradient border */}
       <div
-        className="absolute rounded-[inherit] -z-[1]"
+        className="absolute inset-0 rounded-[inherit] -z-[1]"
         style={{
-          inset: '-1px',
           border: '1px solid transparent',
           background: [
             `linear-gradient(${backgroundColor} 0 100%) padding-box`,
@@ -242,9 +240,8 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
 
       {/* mesh gradient fill near edges */}
       <div
-        className="absolute rounded-[inherit] -z-[1]"
+        className="absolute inset-0 rounded-[inherit] -z-[1]"
         style={{
-          inset: '-1px',
           border: '1px solid transparent',
           background: fillBg.join(', '),
           maskImage: [
