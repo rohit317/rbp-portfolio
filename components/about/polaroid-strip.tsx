@@ -1,40 +1,69 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { useRef, useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 
-import { DottedPattern } from "@/components/ui/dotted-pattern";
+import { useReducedMotion } from "@/lib/motion";
 
-type Polaroid = {
+type Clip = {
   id: string;
+  src: string;
+  poster: string;
   rotate: number;
 };
 
-const PHOTOS: Polaroid[] = [
-  { id: "a", rotate: -8 },
-  { id: "b", rotate: 6 },
-  { id: "c", rotate: -4 },
-  { id: "d", rotate: 7 },
-  { id: "e", rotate: -6 },
-  { id: "f", rotate: 5 },
+const CLIPS: Clip[] = [
+  { id: "a", src: "/polaroids/polaroid-1.mp4", poster: "/polaroids/polaroid-1.jpg", rotate: -8 },
+  { id: "b", src: "/polaroids/polaroid-2.mp4", poster: "/polaroids/polaroid-2.jpg", rotate: 6 },
+  { id: "c", src: "/polaroids/polaroid-3.mp4", poster: "/polaroids/polaroid-3.jpg", rotate: -4 },
+  { id: "d", src: "/polaroids/polaroid-4.mp4", poster: "/polaroids/polaroid-4.jpg", rotate: 7 },
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 function PolaroidCard({
-  photo,
+  clip,
   index,
 }: {
-  photo: Polaroid;
+  clip: Clip;
   index: number;
 }): ReactNode {
   const ref = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const reducedMotion = useReducedMotion();
+
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 220, damping: 18, mass: 0.6 });
   const sy = useSpring(my, { stiffness: 220, damping: 18, mass: 0.6 });
   const tx = useTransform(sx, (v) => `${v}px`);
   const ty = useTransform(sy, (v) => `${v}px`);
+
+  // Play only while the frame is on screen; pause the moment it leaves.
+  useEffect(() => {
+    const holder = ref.current;
+    const video = videoRef.current;
+    if (!holder || !video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(holder);
+
+    return () => {
+      observer.disconnect();
+      video.pause();
+    };
+  }, []);
 
   const handleMove = (e: React.PointerEvent<HTMLDivElement>): void => {
     const el = ref.current;
@@ -60,8 +89,8 @@ function PolaroidCard({
       ref={ref}
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
-      initial={{ opacity: 0, y: -120, filter: "blur(18px)", rotate: photo.rotate }}
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)", rotate: photo.rotate }}
+      initial={{ opacity: 0, y: -120, filter: "blur(18px)", rotate: clip.rotate }}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)", rotate: clip.rotate }}
       transition={{
         duration: 0.9,
         delay: 0.05 + index * 0.08,
@@ -70,11 +99,35 @@ function PolaroidCard({
       style={{
         x: tx,
         y: ty,
-        rotate: photo.rotate,
+        rotate: clip.rotate,
       }}
       className="relative aspect-[3/4] w-[clamp(7rem,13vw,11rem)] shrink-0 overflow-hidden rounded-2xl border-6 border-neutral-300/40 bg-white p-1.5 dark:border-white/15 dark:bg-neutral-900"
     >
-      <DottedPattern className="relative h-full w-full overflow-hidden rounded-xl" />
+      {reducedMotion ? (
+        <img
+          src={clip.poster}
+          alt=""
+          width={270}
+          height={480}
+          className="h-full w-full rounded-xl object-cover"
+          draggable={false}
+          loading="lazy"
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          src={clip.src}
+          poster={clip.poster}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          disablePictureInPicture
+          aria-hidden="true"
+          className="h-full w-full rounded-xl object-cover"
+          draggable={false}
+        />
+      )}
     </motion.div>
   );
 }
@@ -92,8 +145,8 @@ export function PolaroidStrip(): ReactNode {
 
   return (
     <div className="flex flex-wrap w-full items-start justify-center gap-1 px-3.5 sm:gap-1.5 sm:px-8">
-      {PHOTOS.map((photo, i) => (
-        <PolaroidCard key={photo.id} photo={photo} index={i} />
+      {CLIPS.map((clip, i) => (
+        <PolaroidCard key={clip.id} clip={clip} index={i} />
       ))}
     </div>
   );
