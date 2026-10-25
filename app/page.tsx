@@ -48,7 +48,7 @@ export default function HomePage(): ReactNode {
         </FadeIn>
       </section>
 
-      <section className="-mt-9 mx-auto w-full max-w-[680px] px-3.5 pb-0 sm:-mt-15 sm:px-10 sm:pb-0">
+      <section className="-mt-9 mx-auto w-full max-w-[680px] px-3.5 pb-0 sm:-mt-15 sm:px-0 sm:pb-0">
         <FadeIn delay={0.1}>
           <div className="flex flex-col gap-10">
             <Experience />
