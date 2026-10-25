@@ -101,7 +101,7 @@ function PolaroidCard({
         y: ty,
         rotate: clip.rotate,
       }}
-      className="relative aspect-[3/4] w-[clamp(7rem,13vw,11rem)] shrink-0 overflow-hidden rounded-2xl border-6 border-neutral-300/40 bg-white p-1.5 dark:border-white/15 dark:bg-neutral-900"
+      className="relative aspect-[3/4] w-[clamp(7rem,13vw,11rem)] shrink-0 overflow-hidden rounded-2xl border border-foreground/8 shadow-sm"
     >
       {reducedMotion ? (
         <img
@@ -109,7 +109,7 @@ function PolaroidCard({
           alt=""
           width={270}
           height={480}
-          className="h-full w-full rounded-xl object-cover"
+          className="h-full w-full object-cover"
           draggable={false}
           loading="lazy"
         />
@@ -124,7 +124,7 @@ function PolaroidCard({
           preload="metadata"
           disablePictureInPicture
           aria-hidden="true"
-          className="h-full w-full rounded-xl object-cover"
+          className="h-full w-full object-cover"
           draggable={false}
         />
       )}
