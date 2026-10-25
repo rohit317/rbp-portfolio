@@ -20,72 +20,6 @@ import Link from "next/link";
 import { FadeIn } from "@/components/ui/motion-primitives";
 import TiltedCard from "../ui/tilted-card";
 
-function escapeXml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;");
-}
-
-function createProjectArtwork({
-  accentA,
-  accentB,
-  initials,
-  subtitle,
-  title,
-}: {
-  accentA: string;
-  accentB: string;
-  initials: string;
-  subtitle: string;
-  title: string;
-}): string {
-  const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="${escapeXml(title)}">
-      <defs>
-        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="${accentA}" />
-          <stop offset="100%" stop-color="${accentB}" />
-        </linearGradient>
-        <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25" />
-          <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
-        </linearGradient>
-      </defs>
-      <rect width="1200" height="800" rx="64" fill="url(#bg)" />
-      <circle cx="178" cy="138" r="116" fill="#ffffff" fill-opacity="0.12" />
-      <circle cx="1034" cy="160" r="170" fill="#ffffff" fill-opacity="0.08" />
-      <circle cx="998" cy="620" r="120" fill="#000000" fill-opacity="0.12" />
-      <rect x="92" y="104" width="1016" height="592" rx="44" fill="#0b1020" fill-opacity="0.32" stroke="#ffffff" stroke-opacity="0.16" />
-      <rect x="92" y="104" width="1016" height="138" rx="44" fill="url(#glow)" />
-      <text x="136" y="196" fill="#ffffff" fill-opacity="0.92" font-family="Inter, Arial, sans-serif" font-size="34" letter-spacing="0.24em">${escapeXml(initials)}</text>
-      <text x="136" y="258" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="700">${escapeXml(title)}</text>
-      <text x="136" y="320" fill="#ffffff" fill-opacity="0.82" font-family="Inter, Arial, sans-serif" font-size="32">${escapeXml(subtitle)}</text>
-      <g transform="translate(136 392)">
-        <rect width="300" height="22" rx="11" fill="#ffffff" fill-opacity="0.22" />
-        <rect y="42" width="360" height="22" rx="11" fill="#ffffff" fill-opacity="0.18" />
-        <rect y="84" width="252" height="22" rx="11" fill="#ffffff" fill-opacity="0.14" />
-      </g>
-      <g transform="translate(736 332)">
-        <rect width="286" height="212" rx="28" fill="#0b1020" fill-opacity="0.42" stroke="#ffffff" stroke-opacity="0.16" />
-        <text x="34" y="66" fill="#ffffff" fill-opacity="0.72" font-family="SFMono-Regular, Consolas, monospace" font-size="28">project</text>
-        <text x="34" y="118" fill="#ffffff" font-family="SFMono-Regular, Consolas, monospace" font-size="62" font-weight="700">{</text>
-        <text x="102" y="118" fill="#ffffff" fill-opacity="0.9" font-family="SFMono-Regular, Consolas, monospace" font-size="26">${escapeXml(initials)}</text>
-        <text x="34" y="172" fill="#ffffff" font-family="SFMono-Regular, Consolas, monospace" font-size="62" font-weight="700">}</text>
-      </g>
-      <g transform="translate(136 504)">
-        <rect width="160" height="48" rx="24" fill="#ffffff" fill-opacity="0.18" />
-        <rect x="176" width="184" height="48" rx="24" fill="#ffffff" fill-opacity="0.1" />
-        <rect x="376" width="220" height="48" rx="24" fill="#ffffff" fill-opacity="0.14" />
-      </g>
-    </svg>
-  `;
-
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
-
 type Project = {
   id: string;
   icon: ComponentType<{ className?: string }>;
@@ -231,44 +165,16 @@ const PROJECTS: Project[] = [
       "Tone controls, custom tinting, and live theme switching",
     ],
     imageRatio: 1200 / 800,
-    image: createProjectArtwork({
-      accentA: "#141414",
-      accentB: "#b45309",
-      initials: "ASCII",
-      subtitle: "graphics to ASCII converter",
-      title: "asꄗ",
-    }),
-    imageAlt: "askey ASCII art converter artwork",
+    image: "/projects/askey-animation.png",
+    imageAlt: "askey converting an animated sequence into ASCII art",
     modalImages: [
       {
-        src: createProjectArtwork({
-          accentA: "#141414",
-          accentB: "#b45309",
-          initials: "ASCII",
-          subtitle: "graphics to ASCII converter",
-          title: "asꄗ",
-        }),
-        alt: "askey converter canvas",
+        src: "/projects/askey-animation.png",
+        alt: "askey converting an animated sequence into ASCII art",
       },
       {
-        src: createProjectArtwork({
-          accentA: "#1f2937",
-          accentB: "#d97706",
-          initials: "GIF",
-          subtitle: "animated frames and export controls",
-          title: "asꄗ",
-        }),
-        alt: "askey animated export controls",
-      },
-      {
-        src: createProjectArtwork({
-          accentA: "#111827",
-          accentB: "#ea580c",
-          initials: "PWA",
-          subtitle: "offline-ready conversion workflow",
-          title: "asꄗ",
-        }),
-        alt: "askey offline conversion workflow",
+        src: "/projects/askey-home.png",
+        alt: "askey upload screen with export formats",
       },
     ],
   },
@@ -282,7 +188,7 @@ const PROJECTS: Project[] = [
       "A paste bin for creating, encrypting, and sharing code snippets, with syntax highlighting and password-protected pastes.",
     meta: "React · Express · Redux · AES-256",
     stack: ["React", "Express", "Redux", "react-simple-code-editor", "highlight.js", "AES-256/Base64 encryption"],
-    liveHref: "https://pasteez.netlify.com/",
+    liveHref: "https://pasteez.netlify.app/",
     githubHref: "https://github.com/rohit317/pasteez",
     highlights: [
       "Encrypted snippets with syntax highlighting",
@@ -290,44 +196,16 @@ const PROJECTS: Project[] = [
       "Profile and post management backed by client/server routes",
     ],
     imageRatio: 1200 / 800,
-    image: createProjectArtwork({
-      accentA: "#082032",
-      accentB: "#3b82f6",
-      initials: "</>",
-      subtitle: "encrypted code sharing",
-      title: "Pasteez",
-    }),
-    imageAlt: "Pasteez code sharing artwork",
+    image: "/projects/pasteez-editor.png",
+    imageAlt: "Pasteez paste editor with syntax highlighting",
     modalImages: [
       {
-        src: createProjectArtwork({
-          accentA: "#082032",
-          accentB: "#3b82f6",
-          initials: "</>",
-          subtitle: "encrypted code sharing",
-          title: "Pasteez",
-        }),
-        alt: "Pasteez paste editor",
+        src: "/projects/pasteez-editor.png",
+        alt: "Pasteez paste editor with syntax highlighting",
       },
       {
-        src: createProjectArtwork({
-          accentA: "#0c4a6e",
-          accentB: "#1d4ed8",
-          initials: "AES",
-          subtitle: "secure snippet encryption flow",
-          title: "Pasteez",
-        }),
-        alt: "Pasteez encryption flow",
-      },
-      {
-        src: createProjectArtwork({
-          accentA: "#111827",
-          accentB: "#0284c7",
-          initials: "SHARE",
-          subtitle: "public links and profile pages",
-          title: "Pasteez",
-        }),
-        alt: "Pasteez sharing and profile pages",
+        src: "/projects/pasteez-home.png",
+        alt: "Pasteez landing page",
       },
     ],
   },
@@ -341,7 +219,7 @@ const PROJECTS: Project[] = [
       "A React + Vite app for fast AI background removal, with drag-and-drop uploads, instant previews, and one-click downloads.",
     meta: "React 18 · Vite 5 · Framer Motion",
     stack: ["React 18", "Vite 5", "TypeScript", "Tailwind CSS", "Framer Motion", "TanStack Query", "Radix UI"],
-    liveHref: "https://cleanncut.com/",
+    liveHref: "https://clean-n-cut.vercel.app/",
     githubHref: "https://github.com/rohit317/clean-n-cut",
     highlights: [
       "Drag-and-drop uploads with client-side preview",
@@ -349,44 +227,16 @@ const PROJECTS: Project[] = [
       "Motion-rich single-page UX with custom design tokens",
     ],
     imageRatio: 1200 / 800,
-    image: createProjectArtwork({
-      accentA: "#111827",
-      accentB: "#0f766e",
-      initials: "BG",
-      subtitle: "AI background remover",
-      title: "Clean & Cut",
-    }),
-    imageAlt: "Clean and Cut background remover artwork",
+    image: "/projects/cleanncut-hero.png",
+    imageAlt: "Clean & Cut landing page",
     modalImages: [
       {
-        src: createProjectArtwork({
-          accentA: "#111827",
-          accentB: "#0f766e",
-          initials: "BG",
-          subtitle: "AI background remover",
-          title: "Clean & Cut",
-        }),
-        alt: "Clean and Cut upload screen",
+        src: "/projects/cleanncut-hero.png",
+        alt: "Clean & Cut landing page",
       },
       {
-        src: createProjectArtwork({
-          accentA: "#0f172a",
-          accentB: "#0d9488",
-          initials: "CUT",
-          subtitle: "instant preview and results",
-          title: "Clean & Cut",
-        }),
-        alt: "Clean and Cut result preview",
-      },
-      {
-        src: createProjectArtwork({
-          accentA: "#1f2937",
-          accentB: "#14b8a6",
-          initials: "DL",
-          subtitle: "one-click transparent exports",
-          title: "Clean & Cut",
-        }),
-        alt: "Clean and Cut download actions",
+        src: "/projects/cleanncut-remover.png",
+        alt: "Clean & Cut background remover upload flow",
       },
     ],
   },
