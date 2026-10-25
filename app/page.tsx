@@ -52,10 +52,10 @@ export default function HomePage(): ReactNode {
               </h2>
               <div className="mt-[25px] grid max-w-[58ch] gap-[17px] text-[17px] leading-[1.7] tracking-[-0.005em] text-pretty text-foreground/75">
                 <p>
-                  I build full-stack products where AI agents do real work: tool calling, multi-step reasoning, and live integrations on top of reliable backend architecture and polished frontends.
+                  I build full-stack products that pair polished frontend experiences with reliable backend architecture, cloud-native infrastructure, and AI agents that do real work.
                 </p>
                 <p>
-                  I take AI features from prototype to production — serverless and containerized deployments, CI/CD pipelines, automated testing, and the observability to trust what ships.
+                  I work across serverless and containerized deployments, CI/CD pipelines, automated testing, and API integrations to help teams ship faster with confidence.
                 </p>
               </div>
             </div>

@@ -38,7 +38,7 @@ export function Hero(): ReactNode {
               </h1>
 
               <p className="max-w-[40ch] text-[18px] leading-[1.6] text-pretty text-foreground/70 sm:text-[19px]">
-                I build full stack web apps with modern frontends, scalable backends, and AI agents woven into the product — not bolted on.
+                I build full stack web apps with modern frontends, scalable backends, cloud services, and AI agents for smooth, intelligent user experiences.
               </p>
 
               <HeroCtas />
