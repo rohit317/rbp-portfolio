@@ -55,7 +55,7 @@ export default function HomePage(): ReactNode {
                   I build full-stack products that pair polished frontend experiences with reliable backend architecture, cloud-native infrastructure, and AI agents that do real work.
                 </p>
                 <p>
-                  I work across serverless and containerized deployments, CI/CD pipelines, automated testing, and API integrations to help teams ship faster with confidence.
+                  Good software isn&rsquo;t just built — it&rsquo;s operated. I sweat the pipelines, the tests, and the deploys so what ships on Friday is still boring by Monday.
                 </p>
               </div>
             </div>
