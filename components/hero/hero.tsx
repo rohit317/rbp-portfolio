@@ -12,9 +12,9 @@ export function Hero(): ReactNode {
   return (
     <section className="relative flex min-h-svh w-full items-center">
       <div className="mx-auto w-full max-w-275 px-6 pt-24 pb-24 sm:px-10 sm:pt-28 sm:pb-28 md:max-w-320">
-          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-8">
+          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-[1.15fr_1fr] md:gap-10">
             <FadeIn className="flex flex-col gap-4">
-              <p className="font-serif text-[22px] font-medium leading-tight tracking-[-0.01em] text-foreground sm:text-[24px]">
+              <p className="font-serif text-[25px] font-medium leading-tight tracking-[-0.01em] text-foreground sm:text-[28px]">
                 Hi
                 <span aria-hidden="true" className="mx-1">
                   👋
@@ -22,7 +22,7 @@ export function Hero(): ReactNode {
                 , I&rsquo;m Rohit
               </p>
 
-              <h1 className="font-serif text-[clamp(1.9rem,10vw_-_5px,3.25rem)] font-medium leading-[1.02] tracking-[-0.02em] text-foreground md:text-[clamp(2rem,5vw_-_6px,3.25rem)]">
+              <h1 className="font-serif text-[clamp(1.9rem,10vw_-_5px,3.25rem)] font-medium leading-[1.02] tracking-[-0.02em] text-foreground md:text-[clamp(2.1rem,5vw_-_6px,3.6rem)]">
                 <span className="inline-block whitespace-nowrap [&>*]:whitespace-nowrap!">
                   <TextType
                     text={["Full Stack Developer", "Software Engineer", "Tech Enthusiast"]}
@@ -37,7 +37,7 @@ export function Hero(): ReactNode {
                 </span>
               </h1>
 
-              <p className="max-w-[40ch] text-[17px] leading-[1.6] text-pretty text-foreground/70">
+              <p className="max-w-[40ch] text-[18px] leading-[1.6] text-pretty text-foreground/70 sm:text-[19px]">
                 I build full stack web apps with modern frontends, scalable backends, cloud services, and AI integrations for smooth, intelligent user experiences.
               </p>
 
