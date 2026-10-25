@@ -48,7 +48,7 @@ export function ContactCard(): ReactNode {
                     lucideIcon={Mail}
                   />
                   <SocialIcon
-                    href="https://www.linkedin.com"
+                    href="https://www.linkedin.com/in/rohit-totlani-b0b821178"
                     label="LinkedIn"
                     imageSrc="/linkedin.svg"
                   />
