@@ -271,6 +271,23 @@ html[data-theme-anim="1"]::view-transition-new(root) {
   transform: translateX(4px);
 }
 
+/* Gentle scroll cue drift */
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+.scroll-cue {
+  animation: scroll-cue 2.4s ease-in-out infinite;
+}
+
 /* Project detail modal — flat modern styling */
 .project-modal div[class*="rounded-[1.5rem]"] {
   border: none;

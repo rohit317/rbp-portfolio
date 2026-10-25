@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ChevronDown } from "lucide-react";
 
 import { HeroCtas } from "./hero-ctas";
 import { FadeIn, ScaleUnblur } from "@/components/ui/motion-primitives";
@@ -10,8 +11,8 @@ const PORTRAIT_HOVER_SRC = "/rohit-linkedin.jpg";
 
 export function Hero(): ReactNode {
   return (
-    <section className="relative w-full">
-        <div className="mx-auto w-full max-w-275 px-6 pt-[150px] pb-24 sm:px-10 sm:pt-[170px] sm:pb-32">
+    <section className="relative flex min-h-svh w-full items-center">
+      <div className="mx-auto w-full max-w-275 px-6 pt-24 pb-24 sm:px-10 sm:pt-28 sm:pb-28">
           <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-8">
             <FadeIn className="flex flex-col gap-4">
               <p className="font-serif text-[22px] font-medium leading-tight tracking-[-0.01em] text-foreground sm:text-[24px]">
@@ -57,6 +58,19 @@ export function Hero(): ReactNode {
             </ScaleUnblur>
           </div>
         </div>
+
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-5 left-1/2 z-10 -translate-x-1/2"
+      >
+        <a
+          href="#about"
+          aria-label="Scroll to the next section"
+          className="focus-ring scroll-cue inline-flex rounded-full p-2 text-foreground/50 transition-colors hover:text-foreground"
+        >
+          <ChevronDown className="h-5 w-5" aria-hidden="true" />
+        </a>
+      </span>
 
     </section>
   );

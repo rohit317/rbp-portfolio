@@ -22,7 +22,7 @@ export default function HomePage(): ReactNode {
     <main id="top" className="flex flex-1 flex-col gap-20 sm:gap-28">
       <Hero />
 
-      <section id="about" className="-mt-6 mx-auto w-full max-w-312 pt-10 sm:-mt-10 sm:pt-24">
+      <section id="about" className="mx-auto w-full max-w-312 pt-8 sm:pt-12">
         <FadeIn triggerOnce amount={0.25}>
           <PolaroidStrip />
         </FadeIn>
