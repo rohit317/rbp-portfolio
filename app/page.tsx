@@ -8,19 +8,8 @@ import { Stack } from "@/components/about/stack";
 import { FadeIn } from "@/components/ui/motion-primitives";
 import BorderGlow from "@/components/ui/border-glow";
 import { createMetadata, siteConfig } from "@/lib/metadata";
-import { Format } from "@lucasmarkes/hairline/react";
 import type { Metadata } from "next";
-import type { CSSProperties, ReactNode } from "react";
-
-// Hairline's strokes mapped onto the site's ink tokens; the plate must match
-// the intro card's background so the figure's plates read as part of the card.
-const INTRO_FIGURE_STYLE = {
-  "--hairline-plate": "color-mix(in srgb, var(--foreground) 2.5%, var(--background))",
-  "--hairline-hi": "var(--foreground)",
-  "--hairline-edge": "color-mix(in srgb, var(--foreground) 55%, transparent)",
-  "--hairline-mid": "color-mix(in srgb, var(--foreground) 30%, transparent)",
-  "--hairline-lo": "color-mix(in srgb, var(--foreground) 14%, transparent)",
-} as CSSProperties;
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = createMetadata({
   title: "Home",
@@ -54,24 +43,13 @@ export default function HomePage(): ReactNode {
             animateOnInView
           >
             <div className="px-[34px] py-[38px]">
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-9">
-                <h2 className="min-w-0 flex-1 font-serif text-[clamp(2rem,1.4rem_+_2vw,2.7rem)] font-medium leading-[1.08] tracking-[-0.02em] text-balance text-foreground">
-                  From idea to{" "}
-                  <span className="border-b border-foreground/30 pb-0.5">
-                    production
-                  </span>
-                  .
-                </h2>
-                <div
-                  className="w-[45%] max-w-[220px] shrink-0 self-end sm:mt-1 sm:w-[184px] sm:self-auto"
-                  style={INTRO_FIGURE_STYLE}
-                >
-                  <Format
-                    play
-                    label="A formatter snapping crooked lines of code straight"
-                  />
-                </div>
-              </div>
+              <h2 className="font-serif text-[clamp(2rem,1.4rem_+_2vw,2.7rem)] font-medium leading-[1.08] tracking-[-0.02em] text-balance text-foreground">
+                From idea to{" "}
+                <span className="border-b border-foreground/30 pb-0.5">
+                  production
+                </span>
+                .
+              </h2>
               <div className="mt-[25px] grid max-w-[58ch] gap-[17px] text-[17px] leading-[1.7] tracking-[-0.005em] text-pretty text-foreground/75">
                 <p>
                   I build full-stack products that are fast on the front, solid in the back, and smart throughout — with AI agents that do real work.
